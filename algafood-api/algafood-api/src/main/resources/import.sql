@@ -4,9 +4,9 @@ insert into cozinha (id, nome) values (2, 'Indiana');
 insert into restaurante (id, nome, taxa_frete, cozinha_id) values (1, 'Restaurante fescorer', 10.00, 1);
 insert into restaurante (id, nome, taxa_frete, cozinha_id) values (2, 'Restaurante Narcopólio', 12.00, 2);
 
-insert into restaurante (id, nome, taxa_frete, cozinha_id) values (1, 'Thai Gourmet', 10, 1);
-insert into restaurante (id, nome, taxa_frete, cozinha_id) values (2, 'Thai Delivery', 9.50, 1);
-insert into restaurante (id, nome, taxa_frete, cozinha_id) values (3, 'Tuk Tuk Comida Indiana', 15, 2);
+insert into restaurante (id, nome, taxa_frete, cozinha_id) values (3, 'Thai Gourmet', 10, 1);
+insert into restaurante (id, nome, taxa_frete, cozinha_id) values (4, 'Thai Delivery', 9.50, 1);
+insert into restaurante (id, nome, taxa_frete, cozinha_id) values (5, 'Tuk Tuk Comida Indiana', 15, 2);
 
  	insert into estado (id, nome) values (1, 'Minas Gerais');
     insert into estado (id, nome) values (2, 'São Paulo');
