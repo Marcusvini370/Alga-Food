@@ -70,7 +70,7 @@ public class CozinhaController {
 		if(cozinhaAual != null) {
 		BeanUtils.copyProperties(cozinha, cozinhaAual, "id"); // copia os valores de cozinha e coloca dentro da cozinhaAtual, está ignoradano a cópia do id
 		
-		cadastroCozinha.salvar(cozinhaAual);
+				cadastroCozinha.salvar(cozinhaAual);
 		
 				return ResponseEntity.ok(cozinhaAual);
 		}
