@@ -1,6 +1,7 @@
 package com.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +37,17 @@ public class CozinhaController {
 	
 	@GetMapping
 	public List<Cozinha> listar(){
-		return cozinhaRepository.listar();
+		return cozinhaRepository.findAll();
 	}
 	
 		
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) { 
 		// o responseEntity representa uma resposta http onde pode ter  uma instância de cozinha nele
-		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
+		Optional<Cozinha> cozinha = cozinhaRepository.findById(cozinhaId);
 		
-		if (cozinha != null) {
-			return ResponseEntity.ok(cozinha);
+		if (cozinha.isPresent()) {
+			return ResponseEntity.ok(cozinha.get());
 		}
 		
 		return ResponseEntity.notFound().build(); 
@@ -64,15 +65,15 @@ public class CozinhaController {
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId,
 			@RequestBody Cozinha cozinha){
 		
-		Cozinha cozinhaAual = cozinhaRepository.buscar(cozinhaId);
+		Optional<Cozinha> cozinhaAual = cozinhaRepository.findById(cozinhaId);
 		//cozinhaAual.setNome(cozinha.getNome());
 		
-		if(cozinhaAual != null) {
-		BeanUtils.copyProperties(cozinha, cozinhaAual, "id"); // copia os valores de cozinha e coloca dentro da cozinhaAtual, está ignoradano a cópia do id
+		if(cozinhaAual.isPresent()) {
+		BeanUtils.copyProperties(cozinha, cozinhaAual.get(), "id"); // copia os valores de cozinha e coloca dentro da cozinhaAtual, está ignoradano a cópia do id
 		
-				cadastroCozinha.salvar(cozinhaAual);
+		Cozinha cozinhaSalva = 	cadastroCozinha.salvar(cozinhaAual.get());
 		
-				return ResponseEntity.ok(cozinhaAual);
+				return ResponseEntity.ok(cozinhaSalva);
 		}
 		return ResponseEntity.notFound().build();
 		
@@ -80,19 +81,18 @@ public class CozinhaController {
 	
 	
 	@DeleteMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId){
+	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId) {
 		try {
-
-		cadastroCozinha.excluir(cozinhaId);
-		return ResponseEntity.noContent().build();
-	
-		}catch (EntidadeNaoEncontradaExcpetion e) {
+			cadastroCozinha.excluir(cozinhaId);	
+			return ResponseEntity.noContent().build();
+			
+		} catch (EntidadeNaoEncontradaExcpetion e) {
 			return ResponseEntity.notFound().build();
-
-		}catch(EntidadeEmusoExcpetion e) {
-			return  ResponseEntity.status(HttpStatus.CONFLICT).build();
+			
+		} catch (EntidadeEmusoExcpetion e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
-}
+	}
 }
 
 
