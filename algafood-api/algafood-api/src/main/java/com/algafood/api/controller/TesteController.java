@@ -13,8 +13,6 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.repository.RestauranteRepository;
-import static com.algafood.infracstruture.repository.spec.RestauranteSpecs.comFreteGratis;
-import static com.algafood.infracstruture.repository.spec.RestauranteSpecs.comNomeSemelhante;
 
 
 @RestController
