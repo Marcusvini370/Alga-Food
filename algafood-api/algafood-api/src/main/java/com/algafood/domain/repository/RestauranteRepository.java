@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,9 @@ import com.algafood.domain.model.Restaurante;
 public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteReposiotryQueries,
 	JpaSpecificationExecutor<Restaurante>{
 
+	@Query("from Restaurante r join r.cozinha join fetch r.formasPagamento")
+	List<Restaurante> findAll();
+	
 	List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
 	//@Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
