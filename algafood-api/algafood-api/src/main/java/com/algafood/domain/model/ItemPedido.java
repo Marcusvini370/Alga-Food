@@ -12,29 +12,26 @@ import javax.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 public class ItemPedido {
 
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@EqualsAndHashCode.Include
-	private Long id;
-	
-	private BigDecimal quantidade;
-	private BigDecimal precoUnitario;
-	private BigDecimal precoTotal;
-	private String observacao;
-	
-	
-	@ManyToOne
+    @EqualsAndHashCode.Include
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private BigDecimal precoUnitario;
+    private BigDecimal precoTotal;
+    private Integer quantidade;
+    private String observacao;
+
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Pedido pedido;
-	
-	@ManyToOne
+
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Produto produto;
-	
 }

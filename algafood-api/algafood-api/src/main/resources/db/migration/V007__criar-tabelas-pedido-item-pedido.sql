@@ -30,7 +30,7 @@ create table pedido (
 ) engine=InnoDB default charset=utf8;
 
 create table item_pedido (
-    id bigint not null auto_increment, 
+    id bigint not null auto_increment,
     quantidade smallint(6) not null,
     preco_unitario decimal(10,2) not null,
     preco_total decimal(10,2) not null,

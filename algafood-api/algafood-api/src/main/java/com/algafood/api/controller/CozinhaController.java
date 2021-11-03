@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algafood.domain.exception.EntidadeEmusoExcpetion;
-import com.algafood.domain.exception.EntidadeNaoEncontradaExcpetion;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
@@ -42,15 +40,8 @@ public class CozinhaController {
 	
 		
 	@GetMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) { 
-		// o responseEntity representa uma resposta http onde pode ter  uma instância de cozinha nele
-		Optional<Cozinha> cozinha = cozinhaRepository.findById(cozinhaId);
-		
-		if (cozinha.isPresent()) {
-			return ResponseEntity.ok(cozinha.get());
-		}
-		
-		return ResponseEntity.notFound().build(); 
+	public Cozinha buscar(@PathVariable Long cozinhaId) { 
+		return cadastroCozinha.BuscarOuFalhar(cozinhaId);
 	
 	}
 	
@@ -62,26 +53,21 @@ public class CozinhaController {
 	}
 	
 	@PutMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId,
+	public Cozinha atualizar(@PathVariable Long cozinhaId,
 			@RequestBody Cozinha cozinha){
 		
-		Optional<Cozinha> cozinhaAual = cozinhaRepository.findById(cozinhaId);
-		//cozinhaAual.setNome(cozinha.getNome());
+		Cozinha cozinhaAtual = cadastroCozinha.BuscarOuFalhar(cozinhaId);
 		
-		if(cozinhaAual.isPresent()) {
-		BeanUtils.copyProperties(cozinha, cozinhaAual.get(), "id"); // copia os valores de cozinha e coloca dentro da cozinhaAtual, está ignoradano a cópia do id
+		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id"); // copia os valores de cozinha e coloca dentro da cozinhaAtual, está ignoradano a cópia do id
 		
-		Cozinha cozinhaSalva = 	cadastroCozinha.salvar(cozinhaAual.get());
+		return	cadastroCozinha.salvar(cozinhaAtual);
 		
-				return ResponseEntity.ok(cozinhaSalva);
 		}
-		return ResponseEntity.notFound().build();
 		
-	}
 	
-	
+	/*
 	@DeleteMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId) {
+	public ResponseEntity<?> remover(@PathVariable Long cozinhaId) {
 		try {
 			cadastroCozinha.excluir(cozinhaId);	
 			return ResponseEntity.noContent().build();
@@ -89,10 +75,23 @@ public class CozinhaController {
 		} catch (EntidadeNaoEncontradaExcpetion e) {
 			return ResponseEntity.notFound().build();
 			
+			
 		} catch (EntidadeEmusoExcpetion e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
+	*/
+	
+	
+	
+	@DeleteMapping("/{cozinhaId}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long cozinhaId) {
+		
+			cadastroCozinha.excluir(cozinhaId);				
+		
+	}
 }
+
 
 
