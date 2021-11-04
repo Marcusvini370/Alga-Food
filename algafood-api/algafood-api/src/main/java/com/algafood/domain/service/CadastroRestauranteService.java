@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.algafood.domain.exception.EntidadeNaoEncontradaExcpetion;
+import com.algafood.domain.exception.RestauranteNaoEncontradoExcpetion;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.CozinhaRepository;
@@ -24,7 +25,7 @@ public class CadastroRestauranteService {
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaExcpetion(
+				.orElseThrow(() -> new RestauranteNaoEncontradoExcpetion(
 						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, cozinhaId)));
 		
 		
@@ -37,7 +38,7 @@ public class CadastroRestauranteService {
 	
 	public Restaurante BuscarOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaExcpetion(String.format(
+				.orElseThrow(() -> new RestauranteNaoEncontradoExcpetion(String.format(
 						MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId))); 
 	}
 }

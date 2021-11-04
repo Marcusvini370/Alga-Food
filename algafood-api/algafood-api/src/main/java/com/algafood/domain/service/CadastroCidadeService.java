@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.algafood.domain.exception.CidadeNaoEncontradaExcpetion;
 import com.algafood.domain.exception.EntidadeEmusoExcpetion;
 import com.algafood.domain.exception.EntidadeNaoEncontradaExcpetion;
 import com.algafood.domain.model.Cidade;
@@ -41,22 +42,23 @@ public class CadastroCidadeService {
 	 
      
      public void excluir(Long cidadeId) {
-         try {
-             cidadeRepository.deleteById(cidadeId);
-             
-         } catch (EmptyResultDataAccessException e) {
-             throw new EntidadeNaoEncontradaExcpetion(
-                 String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId));
-         
-         } catch (DataIntegrityViolationException e) {
-             throw new EntidadeEmusoExcpetion(
-                 String.format(MSG_CIDADE_EM_USO, cidadeId));
-         }
-     }
+    	    try {
+    	        cidadeRepository.deleteById(cidadeId);
+    	        
+    	    } catch (EmptyResultDataAccessException e) {
+    	        throw new CidadeNaoEncontradaExcpetion(cidadeId);
+    	    
+    	    } catch (DataIntegrityViolationException e) {
+    	        throw new EntidadeEmusoExcpetion(
+    	            String.format(MSG_CIDADE_EM_USO, cidadeId));
+    	    }
+    	}
+     
+     
      
      public Cidade BuscarOuFalhar(Long cidadeId) {
  		return cidadeRepository.findById(cidadeId)
- 				.orElseThrow(() -> new EntidadeNaoEncontradaExcpetion(String.format(
+ 				.orElseThrow(() -> new CidadeNaoEncontradaExcpetion(String.format(
  						MSG_CIDADE_NAO_ENCONTRADA, cidadeId))); 
  	}
 
