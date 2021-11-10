@@ -15,13 +15,17 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Problem {
 	
+	private LocalDateTime timestamp;
 	private Integer status;
 	private String type;
 	private String title;
 	private String detail;
 	
-	private LocalDateTime dataHora;
-	private String mensagem;
+
+	private String userMessage;
+	
+	
+	
 	
 	
 }
