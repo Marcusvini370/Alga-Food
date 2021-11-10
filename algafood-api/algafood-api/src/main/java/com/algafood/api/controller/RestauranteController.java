@@ -129,7 +129,6 @@ public class RestauranteController {
 		Restaurante restauranteAtual = cadastroRestaurante.BuscarOuFalhar(restauranteId);
 
 		
-		
 			merge(campos, restauranteAtual, request);
 				return atualizar(restauranteId, restauranteAtual);
 		
