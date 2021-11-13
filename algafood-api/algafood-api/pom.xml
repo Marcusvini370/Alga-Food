@@ -52,10 +52,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		
-		
-		
-		
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
@@ -65,6 +61,14 @@
     	<groupId>org.apache.commons</groupId>
     	<artifactId>commons-lang3</artifactId>
     </dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		
+		
 		
 			</dependencies>
 

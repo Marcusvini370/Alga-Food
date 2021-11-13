@@ -1,31 +1,34 @@
 package com.algafood.api.exceptionhandler;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-@JsonInclude(value = Include.NON_NULL) // mostre apenas os que não estão nulos
+@JsonInclude(Include.NON_NULL)
 @Getter
 @Builder
-@AllArgsConstructor
 public class Problem {
-	
-	private LocalDateTime timestamp;
+
 	private Integer status;
+	private LocalDateTime timestamp;
 	private String type;
 	private String title;
 	private String detail;
-	
-
 	private String userMessage;
+	private List<Field> fields;
 	
-	
-	
-	
+	@Getter
+	@Builder
+	public static class Field {
+		
+		private String name;
+		private String userMessage;
+		
+	}
 	
 }
