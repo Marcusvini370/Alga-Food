@@ -8,7 +8,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,7 +45,7 @@ public class Restaurante {
 	
 	//@NotNull
 	//@NotEmpty
-	@NotBlank(message = "Nome é obrigatório	")
+	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
@@ -67,7 +66,7 @@ public class Restaurante {
 	@Valid //valida tbm as propriedades de cozinha
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
 	
