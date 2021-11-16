@@ -19,13 +19,14 @@ import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.ConvertGroup;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.algafood.core.validation.Groups;
-import com.algafood.core.validation.TaxaFrete;
+import com.algafood.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
@@ -33,6 +34,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
+@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
 @Entity
@@ -43,18 +45,16 @@ public class Restaurante {
 	@Id
 	private Long id;
 	
-	//@NotNull
-	//@NotEmpty
+	
 	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
-	//@PositiveOrZero //@DecimalMin("0")
-	@TaxaFrete
+	@NotNull
+	@PositiveOrZero //@DecimalMin("0")
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 	
-	@NotNull
 	@JsonIgnore
 	@CreationTimestamp // deve ser atribuído com data e hora local no momento em que a entidade for salva pela primeira vez
 	@Column(nullable = false, columnDefinition = "datetime") // tira os milisegundos no salvamento pro bd

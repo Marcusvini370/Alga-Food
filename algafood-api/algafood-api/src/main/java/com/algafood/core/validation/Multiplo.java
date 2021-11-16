@@ -1,5 +1,4 @@
 package com.algafood.core.validation;
-
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;
@@ -13,17 +12,18 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.PositiveOrZero;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = { })
-@PositiveOrZero
-public @interface TaxaFrete {
+@Constraint(validatedBy = { MultiploValidator.class })
+public @interface Multiplo {
 
+	String message() default "múltiplo inválido";
 
-	String message() default "{TaxaFrete.invalida}";
 	Class<?>[] groups() default { };
+
 	Class<? extends Payload>[] payload() default { };
+	
+	int numero();
 	
 }
