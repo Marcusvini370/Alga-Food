@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.algafood.Groups;
+import com.algafood.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
