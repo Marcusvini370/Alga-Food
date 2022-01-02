@@ -17,7 +17,7 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.service.CadastroCozinhaService;
 
 @SpringBootTest //funcionalidades do springboot nos testes
-class CadastroCozinhaIntegrationTests {
+class CadastroCozinhaIT {
 
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
