@@ -1,6 +1,7 @@
 package com.algafood;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
@@ -54,10 +55,7 @@ class CadastroCozinhaApiIT {
 	}
 	
 	@Test
-	public void deveConterCozinhas_QuandoConsultarCozinhas() {
-		
-		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails(); // retorna o log no console quando falhar
-		
+	public void deveConterCozinhas_QuandoConsultarCozinhas() {		
 		given() //dado que
 			.accept(ContentType.JSON)  //aceita retorno em json
 		.when() // quando
@@ -77,6 +75,31 @@ class CadastroCozinhaApiIT {
 			.post()
 		.then()
 			.statusCode(HttpStatus.CREATED.value());
+	}
+	
+	@Test
+	public void deveRetornarRespostaEStatusCorretos_QuandoConsultarCozinhaExistente() {
+		given() 
+			.pathParam("cozinhaId", 2) // indicar o parametro e o id
+			.accept(ContentType.JSON) 
+		.when() 
+			.get("/{cozinhaId}")
+		.then()
+			.statusCode(HttpStatus.OK.value())
+			.body("nome", equalTo("Americana"));
+		
+	}
+	
+	@Test
+	public void deveRetornarStatus404_QuandoConsultarCozinhaInexistente() {
+		given() 
+			.pathParam("cozinhaId", 100) // indicar o parametro e o id
+			.accept(ContentType.JSON) 
+		.when() 
+			.get("/{cozinhaId}")
+		.then()
+			.statusCode(HttpStatus.NOT_FOUND.value());
+		
 	}
 	
 	private void prepararDados() {
