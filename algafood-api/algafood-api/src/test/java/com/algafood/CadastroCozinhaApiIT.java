@@ -3,7 +3,6 @@ package com.algafood;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -74,6 +73,8 @@ class CadastroCozinhaApiIT {
 		.then()
 			.statusCode(HttpStatus.CREATED.value());
 	}
+	
+	
 	
 	@Test
 	public void deveRetornarQuantidadeCorretaDeCozinhas_QuandoConsultarCozinhas() {

@@ -38,16 +38,16 @@ class CadastroCozinhaIT {
 	}
 	
 	@Test
-	public void testarCadastroCozinhaSemNome() { 
-		Cozinha novaCozinha = new Cozinha();
-		   novaCozinha.setNome(null);
-		   
-		   DataIntegrityViolationException erroEsperado =
-		      Assertions.assertThrows(DataIntegrityViolationException.class, () -> {
-		    	   cadastroCozinha.salvar(novaCozinha);
-		      });
-		   
-		   assertThat(erroEsperado).isNotNull();
+	public void testarCadastroCozinhaSemNome() {
+	   Cozinha novaCozinha = new Cozinha();
+	   novaCozinha.setNome(null);
+	   
+	   ConstraintViolationException erroEsperado =
+	      Assertions.assertThrows(ConstraintViolationException.class, () -> {
+	         cadastroCozinha.salvar(novaCozinha);
+	      });
+	   
+	   assertThat(erroEsperado).isNotNull();
 	}
 	
 		@Test()
