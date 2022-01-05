@@ -28,6 +28,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.algafood.core.validation.Groups;
 import com.algafood.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
 import lombok.Data;
@@ -65,6 +66,7 @@ public class Restaurante {
 	@Column(nullable = false, columnDefinition = "datetime") 
 	private LocalDateTime dataAtualizacao;
 	
+	@JsonIgnoreProperties(value = "nome", allowGetters = true)
 	@Valid //valida tbm as propriedades de cozinha
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@NotNull

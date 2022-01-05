@@ -33,7 +33,7 @@ public class Cozinha {
 	private Long id;
 	
 	 
-	@NotBlank(message = "Nome é Obrigatório")
+	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
