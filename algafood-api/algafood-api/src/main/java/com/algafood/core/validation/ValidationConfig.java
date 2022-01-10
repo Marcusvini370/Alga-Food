@@ -14,5 +14,5 @@ public class ValidationConfig {
 		bean.setValidationMessageSource(messageSource);
 		return bean;
 	}
-	
+
 }

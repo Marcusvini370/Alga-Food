@@ -7,6 +7,5 @@ import com.algafood.domain.model.Estado;
 
 @Repository
 public interface EstadoRepository extends JpaRepository<Estado, Long> {
-	
-	
+
 }

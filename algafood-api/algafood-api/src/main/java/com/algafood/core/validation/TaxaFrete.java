@@ -17,13 +17,14 @@ import javax.validation.constraints.PositiveOrZero;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = { })
+@Constraint(validatedBy = {})
 @PositiveOrZero
 public @interface TaxaFrete {
 
-
 	String message() default "{TaxaFrete.invalida}";
-	Class<?>[] groups() default { };
-	Class<? extends Payload>[] payload() default { };
-	
+
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
+
 }

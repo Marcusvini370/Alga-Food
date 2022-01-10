@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.algafood.domain.model.Permissao;
 
-
 @Repository
 public interface PermissaoRepository extends JpaRepository<Permissao, Long> {
-	
-	 
 
 }

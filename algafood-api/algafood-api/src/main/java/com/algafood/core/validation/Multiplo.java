@@ -1,4 +1,5 @@
 package com.algafood.core.validation;
+
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;
@@ -20,10 +21,10 @@ public @interface Multiplo {
 
 	String message() default "múltiplo inválido";
 
-	Class<?>[] groups() default { };
+	Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default { };
-	
+	Class<? extends Payload>[] payload() default {};
+
 	int numero();
-	
+
 }

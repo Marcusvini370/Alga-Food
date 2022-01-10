@@ -16,14 +16,14 @@ public @interface ValorZeroIncluiDescricao {
 
 	String message() default "descrição obrigatória inválida";
 
-	Class<?>[] groups() default { };
+	Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default { };
-	
+	Class<? extends Payload>[] payload() default {};
+
 	String valorField();
-	
+
 	String descricaoField();
-	
+
 	String descricaoObrigatoria();
-	
+
 }

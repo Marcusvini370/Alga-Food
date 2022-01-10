@@ -1,6 +1,6 @@
 package com.algafood.domain.model;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,25 +22,24 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario {
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column(nullable = false)
 	private String email;
-	
-	 @CreationTimestamp
-	 @Column(nullable = false, columnDefinition = "datetime")
-	 private LocalDateTime dataCadastro;
-	 
-	 @ManyToMany
-	 @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
-	            inverseJoinColumns = @JoinColumn(name = "grupo_id"))
-	    private List<Grupo> grupos = new ArrayList<>();
+
+	@CreationTimestamp
+	@Column(nullable = false, columnDefinition = "datetime")
+	private OffsetDateTime dataCadastro;
+
+	@ManyToMany
+	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	private List<Grupo> grupos = new ArrayList<>();
 
 }

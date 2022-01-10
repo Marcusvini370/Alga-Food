@@ -1,17 +1,15 @@
 package com.algafood.domain.exception;
 
-public class CidadeNaoEncontradaExcpetion extends EntidadeNaoEncontradaExcpetion{
-
+public class CidadeNaoEncontradaExcpetion extends EntidadeNaoEncontradaExcpetion {
 
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	public CidadeNaoEncontradaExcpetion(String mensagem) {
 		super(mensagem);
- 	}
-	
-	public CidadeNaoEncontradaExcpetion(Long cidadeId) {
-        this(String.format("Não existe um cadastro de cidade com código %d", cidadeId));
-    }   
-	
 	}
+
+	public CidadeNaoEncontradaExcpetion(Long cidadeId) {
+		this(String.format("Não existe um cadastro de cidade com código %d", cidadeId));
+	}
+
+}

@@ -1,6 +1,5 @@
 package com.algafood.domain.model;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,24 +18,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
 @Entity
 public class Cozinha {
-	
-	
+
 	@NotNull(groups = Groups.CozinhaId.class)
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Long id;
-	
-	 
-	//@NotBlank
+
+	// @NotBlank
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@OneToMany(mappedBy = "cozinha") // a associação voi mapeada na entidade cozinha do restaurante
-	private List<Restaurante> restaurantes = new ArrayList<>();	
+	private List<Restaurante> restaurantes = new ArrayList<>();
 }

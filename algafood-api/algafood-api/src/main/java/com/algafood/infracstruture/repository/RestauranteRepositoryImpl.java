@@ -21,52 +21,49 @@ import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.RestauranteReposiotryQueries;
 import com.algafood.domain.repository.RestauranteRepository;
 
-
 @Repository
-public class RestauranteRepositoryImpl implements RestauranteReposiotryQueries { 
+public class RestauranteRepositoryImpl implements RestauranteReposiotryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
-	
-	@Autowired @Lazy
+
+	@Autowired
+	@Lazy
 	private RestauranteRepository restauranteRepository;
-	
-	@Override 
-	public List<Restaurante> find(String nome, 
-			BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal){
+
+	@Override
+	public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		
-		
-		 var criteria = builder.createQuery(Restaurante.class);
-		 
-		 var  root = criteria.from(Restaurante.class); //from Restaurante
-		 
-		 var predicates = new ArrayList<>();
-		 
-		 if (StringUtils.hasText(nome)) {
+
+		var criteria = builder.createQuery(Restaurante.class);
+
+		var root = criteria.from(Restaurante.class); // from Restaurante
+
+		var predicates = new ArrayList<>();
+
+		if (StringUtils.hasText(nome)) {
 			predicates.add(builder.like(root.get("nome"), "%" + nome + "%"));
-		 }
-		
-		 if (taxaFreteInicial != null) {
-			 predicates.add(builder.greaterThanOrEqualTo(root.get("taxaFrete"), taxaFreteInicial));
-		 }
-		 
-		 if (taxaFreteFinal != null) {
-			 predicates.add(builder.lessThanOrEqualTo(root.get("taxaFrete"), taxaFreteFinal));
-		 }
-		 
-		 criteria.where(predicates.toArray(new Predicate[0]));
-		
+		}
+
+		if (taxaFreteInicial != null) {
+			predicates.add(builder.greaterThanOrEqualTo(root.get("taxaFrete"), taxaFreteInicial));
+		}
+
+		if (taxaFreteFinal != null) {
+			predicates.add(builder.lessThanOrEqualTo(root.get("taxaFrete"), taxaFreteFinal));
+		}
+
+		criteria.where(predicates.toArray(new Predicate[0]));
+
 		var query = manager.createQuery(criteria);
 		return query.getResultList();
-			
+
 	}
 
 	@Override
 	public List<Restaurante> findComFreteGratis(String nome) {
 
-
 		return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
 	}
-	
+
 }

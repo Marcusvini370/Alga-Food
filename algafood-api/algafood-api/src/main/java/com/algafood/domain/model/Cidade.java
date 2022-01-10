@@ -24,20 +24,19 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Cidade {
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @NotBlank
-    @Column(nullable = false)
-    private String nome;
-    
+	@EqualsAndHashCode.Include
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Valid
-    @ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
-    @NotNull
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Estado estado;
+	@NotBlank
+	@Column(nullable = false)
+	private String nome;
+
+	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
+	@NotNull
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Estado estado;
 }

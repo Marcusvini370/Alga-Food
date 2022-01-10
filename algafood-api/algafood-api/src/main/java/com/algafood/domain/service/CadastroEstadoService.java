@@ -20,32 +20,28 @@ public class CadastroEstadoService {
 	private static final String MSG_ESTADO_NAO_ENCONTRADO = "Não existe um cadastro de estado com código %d";
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
+
 	@Transactional
 	public Estado salvar(Estado estado) {
-        return estadoRepository.save(estado);
-    }
-    
-	@Transactional
-    public void excluir(Long estadoId) {
-        try {
-            estadoRepository.deleteById(estadoId);
-            
-        } catch (EmptyResultDataAccessException e) {
-            throw new EstadoNaoEncontradoExcpetion(
-                String.format(MSG_ESTADO_NAO_ENCONTRADO, estadoId));
-        
-        } catch (DataIntegrityViolationException e) {
-            throw new EntidadeEmusoExcpetion(
-                String.format(MSG_ESTADO_EM_USO, estadoId));
-        }
-    }
-    
-    public Estado BuscarOuFalhar(Long EstadoId) {
-		return estadoRepository.findById(EstadoId)
-				.orElseThrow(() -> new EstadoNaoEncontradoExcpetion(String.format(
-						MSG_ESTADO_NAO_ENCONTRADO, EstadoId))); 
+		return estadoRepository.save(estado);
 	}
-	
+
+	@Transactional
+	public void excluir(Long estadoId) {
+		try {
+			estadoRepository.deleteById(estadoId);
+
+		} catch (EmptyResultDataAccessException e) {
+			throw new EstadoNaoEncontradoExcpetion(String.format(MSG_ESTADO_NAO_ENCONTRADO, estadoId));
+
+		} catch (DataIntegrityViolationException e) {
+			throw new EntidadeEmusoExcpetion(String.format(MSG_ESTADO_EM_USO, estadoId));
+		}
+	}
+
+	public Estado BuscarOuFalhar(Long EstadoId) {
+		return estadoRepository.findById(EstadoId).orElseThrow(
+				() -> new EstadoNaoEncontradoExcpetion(String.format(MSG_ESTADO_NAO_ENCONTRADO, EstadoId)));
+	}
 
 }

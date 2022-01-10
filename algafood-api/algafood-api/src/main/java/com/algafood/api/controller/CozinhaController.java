@@ -21,77 +21,64 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
 
-
-@RestController 
+@RestController
 @RequestMapping(value = "/cozinhas")
 public class CozinhaController {
-	
+
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-	
+
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
 
-	
 	@GetMapping
-	public List<Cozinha> listar(){
+	public List<Cozinha> listar() {
 		return cozinhaRepository.findAll();
 	}
-	
-		
+
 	@GetMapping("/{cozinhaId}")
-	public Cozinha buscar(@PathVariable Long cozinhaId) { 
+	public Cozinha buscar(@PathVariable Long cozinhaId) {
 		return cadastroCozinha.BuscarOuFalhar(cozinhaId);
-	
+
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Cozinha adicionar(@RequestBody @Valid Cozinha cozinha) { // o @RequestBody vai receber o corpo da requisição
 		return cadastroCozinha.salvar(cozinha);
-		
+
 	}
-	
+
 	@PutMapping("/{cozinhaId}")
-	public Cozinha atualizar(@PathVariable Long cozinhaId,
-			@RequestBody @Valid Cozinha cozinha){
-		
+	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid Cozinha cozinha) {
+
 		Cozinha cozinhaAtual = cadastroCozinha.BuscarOuFalhar(cozinhaId);
-		
-		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id"); // copia os valores de cozinha e coloca dentro da cozinhaAtual, está ignoradano a cópia do id
-		
-		return	cadastroCozinha.salvar(cozinhaAtual);
-		
-		}
-		
-	
-	/*
-	@DeleteMapping("/{cozinhaId}")
-	public ResponseEntity<?> remover(@PathVariable Long cozinhaId) {
-		try {
-			cadastroCozinha.excluir(cozinhaId);	
-			return ResponseEntity.noContent().build();
-			
-		} catch (EntidadeNaoEncontradaExcpetion e) {
-			return ResponseEntity.notFound().build();
-			
-			
-		} catch (EntidadeEmusoExcpetion e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
+
+		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id"); // copia os valores de cozinha e coloca dentro da
+																// cozinhaAtual, está ignoradano a cópia do id
+
+		return cadastroCozinha.salvar(cozinhaAtual);
+
 	}
-	*/
-	
-	
-	
+
+	/*
+	 * @DeleteMapping("/{cozinhaId}") public ResponseEntity<?> remover(@PathVariable
+	 * Long cozinhaId) { try { cadastroCozinha.excluir(cozinhaId); return
+	 * ResponseEntity.noContent().build();
+	 * 
+	 * } catch (EntidadeNaoEncontradaExcpetion e) { return
+	 * ResponseEntity.notFound().build();
+	 * 
+	 * 
+	 * } catch (EntidadeEmusoExcpetion e) { return
+	 * ResponseEntity.status(HttpStatus.CONFLICT).build(); } }
+	 */
+
 	@DeleteMapping("/{cozinhaId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long cozinhaId) {
-		
-			cadastroCozinha.excluir(cozinhaId);				
-		
+
+		cadastroCozinha.excluir(cozinhaId);
+
 	}
 }
-
-
-
