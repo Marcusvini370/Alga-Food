@@ -37,7 +37,6 @@ public class Cozinha {
 	@Column(nullable = false)
 	private String nome;
 	
-	@JsonIgnore // ignora na serialização essa propriedade
 	@OneToMany(mappedBy = "cozinha") // a associação voi mapeada na entidade cozinha do restaurante
 	private List<Restaurante> restaurantes = new ArrayList<>();	
 }

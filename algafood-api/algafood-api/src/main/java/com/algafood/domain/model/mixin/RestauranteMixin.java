@@ -11,7 +11,7 @@ import com.algafood.domain.model.Produto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public class RestauranteMixin {
+public abstract class RestauranteMixin {
 
 	
 	
