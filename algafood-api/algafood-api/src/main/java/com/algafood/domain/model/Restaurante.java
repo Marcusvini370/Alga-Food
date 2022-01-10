@@ -2,6 +2,7 @@ package com.algafood.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,12 +59,12 @@ public class Restaurante {
 	
 	@CreationTimestamp // deve ser atribuído com data e hora local no momento em que a entidade for salva pela primeira vez
 	@Column(nullable = false, columnDefinition = "datetime") // tira os milisegundos no salvamento pro bd
-	private LocalDateTime dataCadastro;
+	private OffsetDateTime dataCadastro;
 	
 	
 	@UpdateTimestamp // atribuir hora e local sempre que fizer atualização da entidade
 	@Column(nullable = false, columnDefinition = "datetime") 
-	private LocalDateTime dataAtualizacao;
+	private OffsetDateTime dataAtualizacao;
 	
 	@Valid //valida tbm as propriedades de cozinha
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
