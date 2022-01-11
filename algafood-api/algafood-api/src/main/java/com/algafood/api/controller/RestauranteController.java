@@ -30,6 +30,7 @@ import com.algafood.core.validation.ValidacaoException;
 import com.algafood.domain.exception.CozinhaNaoEncontradaExcpetion;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Restaurante;
+import com.algafood.domain.model.RestauranteDTO;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -54,8 +55,11 @@ public class RestauranteController {
 	}
 
 	@GetMapping("/{restauranteId}")
-	public Restaurante buscar(@PathVariable Long restauranteId) {
-		return cadastroRestaurante.BuscarOuFalhar(restauranteId);
+	public RestauranteDTO buscar(@PathVariable Long restauranteId) {
+		Restaurante restaurante = cadastroRestaurante.BuscarOuFalhar(restauranteId);
+		
+		RestauranteDTO restauranteDTO = null; // Conversão da Entidade Restaurante para RestauranteDTO
+		return restauranteDTO;
 	}
 
 	/*
