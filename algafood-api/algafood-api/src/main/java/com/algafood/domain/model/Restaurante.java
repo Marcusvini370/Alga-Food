@@ -44,30 +44,30 @@ public class Restaurante {
 	@Id
 	private Long id;
 
-	@NotBlank
+	//@NotBlank
 	@Column(nullable = false)
 	private String nome;
 
-	@NotNull
-	@PositiveOrZero // @DecimalMin("0")
+	//@NotNull
+	//@PositiveOrZero // @DecimalMin("0")
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
-	@CreationTimestamp // deve ser atribuído com data e hora local no momento em que a entidade for
-						// salva pela primeira vez
-	@Column(nullable = false, columnDefinition = "datetime") // tira os milisegundos no salvamento pro bd
-	private OffsetDateTime dataCadastro;
-
-	@UpdateTimestamp // atribuir hora e local sempre que fizer atualização da entidade
-	@Column(nullable = false, columnDefinition = "datetime")
-	private OffsetDateTime dataAtualizacao;
-
-	@Valid // valida tbm as propriedades de cozinha
-	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-	@NotNull
+	//@Valid // valida tbm as propriedades de cozinha
+	//@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
+	//@NotNull
 	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
+	
+	@CreationTimestamp // deve ser atribuído com data e hora utc no momento em que a entidade for salva pela primeira vez
+	@Column(nullable = false, columnDefinition = "datetime") // tira os milisegundos no salvamento pro bd
+	private OffsetDateTime dataCadastro;
+
+	@UpdateTimestamp // atribuir hora e utc sempre que fizer atualização da entidade
+	@Column(nullable = false, columnDefinition = "datetime")
+	private OffsetDateTime dataAtualizacao;
+
 
 	@Embedded // Endereco faz parte da entidade Restaurante
 	private Endereco endereco;

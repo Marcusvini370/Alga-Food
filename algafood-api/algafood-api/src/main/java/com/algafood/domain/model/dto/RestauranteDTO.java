@@ -1,4 +1,4 @@
-package com.algafood.domain.model;
+package com.algafood.domain.model.dto;
 
 import java.math.BigDecimal;
 
