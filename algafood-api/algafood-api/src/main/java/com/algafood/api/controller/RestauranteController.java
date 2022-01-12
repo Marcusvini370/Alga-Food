@@ -3,13 +3,11 @@ package com.algafood.api.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -32,11 +30,9 @@ import com.algafood.api.assembler.RestauranteModelAssembler;
 import com.algafood.core.validation.ValidacaoException;
 import com.algafood.domain.exception.CozinhaNaoEncontradaExcpetion;
 import com.algafood.domain.exception.NegocioException;
-import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.model.dto.CozinhaDTO;
 import com.algafood.domain.model.dto.RestauranteDTO;
-import com.algafood.domain.model.dto.input.RestauranteIpunt;
+import com.algafood.domain.model.dto.input.RestauranteInput;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -92,7 +88,7 @@ public class RestauranteController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public RestauranteDTO adicionar(@RequestBody @Valid RestauranteIpunt restauranteInput) {
+	public RestauranteDTO adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
 
 		try {
 				Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
@@ -129,7 +125,7 @@ public class RestauranteController {
 	 */
 
 	@PutMapping("/{restauranteId}")
-	public RestauranteDTO atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteIpunt restauranteInput) {
+	public RestauranteDTO atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteInput restauranteInput) {
 		
 		try {
 			//Restaurante restaurante = restauranteInputDisassemble.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
@@ -150,7 +146,7 @@ public class RestauranteController {
 
 	@PatchMapping("/{restauranteId}")
 	public RestauranteDTO atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos,
-			HttpServletRequest request, RestauranteIpunt restauranteInput) {
+			HttpServletRequest request) {
 
 		Restaurante restauranteAtual = cadastroRestaurante.BuscarOuFalhar(restauranteId);
 

@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algafood.api.assembler.EstadoInputDisassembler;
+import com.algafood.api.assembler.EstadoModelAssembler;
 import com.algafood.domain.model.Estado;
+import com.algafood.domain.model.dto.EstadoDTO;
+import com.algafood.domain.model.dto.input.EstadoInput;
 import com.algafood.domain.repository.EstadoRepository;
 import com.algafood.domain.service.CadastroEstadoService;
 
@@ -30,31 +34,40 @@ public class EstadoController {
 
 	@Autowired
 	private CadastroEstadoService cadastroEstado;
+	
+	@Autowired
+	private EstadoModelAssembler estadoModelAssembler;
+
+	@Autowired
+	private EstadoInputDisassembler estadoInputDisassembler;    
 
 	@GetMapping
-	public List<Estado> listar() {
-		return estadoRepository.findAll();
+	public List<EstadoDTO> listar() {
+		
+		return estadoModelAssembler.toCollectionModel(estadoRepository.findAll());
 	}
 
 	@GetMapping("/{estadoId}")
-	public Estado buscar(@PathVariable Long estadoId) {
+	public EstadoDTO buscar(@PathVariable Long estadoId) {
 
-		return cadastroEstado.BuscarOuFalhar(estadoId);
+		return estadoModelAssembler.toModel(cadastroEstado.BuscarOuFalhar(estadoId));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Estado adicionar(@RequestBody @Valid Estado estado) {
-		return cadastroEstado.salvar(estado);
+	public EstadoDTO adicionar(@RequestBody @Valid EstadoInput estadoInput) {
+		Estado estado = estadoInputDisassembler.toDomainObject(estadoInput);
+		return estadoModelAssembler.toModel(cadastroEstado.salvar(estado));
 	}
 
 	@PutMapping("/{estadoId}")
-	public Estado atualizar(@PathVariable Long estadoId, @RequestBody @Valid Estado estado) {
+	public EstadoDTO atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput) {
 		Estado estadoAtual = cadastroEstado.BuscarOuFalhar(estadoId);
 
-		BeanUtils.copyProperties(estado, estadoAtual, "id");
+		//BeanUtils.copyProperties(estado, estadoAtual, "id");
+		 estadoInputDisassembler.copyToDomainObject(estadoInput, estadoAtual);
 
-		return cadastroEstado.salvar(estadoAtual);
+		return estadoModelAssembler.toModel(cadastroEstado.salvar(estadoAtual));
 
 	}
 
