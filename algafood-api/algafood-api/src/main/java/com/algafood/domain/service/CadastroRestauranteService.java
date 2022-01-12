@@ -5,7 +5,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.algafood.domain.exception.EntidadeNaoEncontradaExcpetion;
 import com.algafood.domain.exception.RestauranteNaoEncontradoExcpetion;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
