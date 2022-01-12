@@ -1,0 +1,31 @@
+package com.algafood.api.assembler;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.model.Restaurante;
+import com.algafood.domain.model.dto.input.RestauranteIpunt;
+
+@Component
+public class RestauranteInputDisassembler {
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
+	public Restaurante toDomainObject(RestauranteIpunt restauranteInput) {
+	return modelMapper.map(restauranteInput, Restaurante.class);	
+	}
+
+	public void copyToDomainObject(RestauranteIpunt restauranteInput, Restaurante restaurante) {
+		// para evitar org.springframework.orm.jpa.JpaSystemException: identifier of an instance of 
+		//com.algafood.domain.model.Cozinha was altered from 1 to 2; nested exception is 
+		//org.hibernate.HibernateException: identifier of an instance of com.algafood.domain.model.Cozinha was altered from 1 to 2
+
+		restaurante.setCozinha(new Cozinha());
+		
+		modelMapper.map(restauranteInput, restaurante);
+	}
+	
+}

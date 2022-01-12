@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algafood.api.assembler.RestauranteInputDisassemble;
+import com.algafood.api.assembler.RestauranteInputDisassembler;
 import com.algafood.api.assembler.RestauranteModelAssembler;
 import com.algafood.core.validation.ValidacaoException;
 import com.algafood.domain.exception.CozinhaNaoEncontradaExcpetion;
@@ -59,7 +59,7 @@ public class RestauranteController {
 	private RestauranteModelAssembler restauranteModelAssembler;
 	
 	@Autowired 
-	private RestauranteInputDisassemble restauranteInputDisassemble;
+	private RestauranteInputDisassembler restauranteInputDisassembler;
 
 	@GetMapping
 	public List<RestauranteDTO> listar() {
@@ -95,7 +95,7 @@ public class RestauranteController {
 	public RestauranteDTO adicionar(@RequestBody @Valid RestauranteIpunt restauranteInput) {
 
 		try {
-				Restaurante restaurante = restauranteInputDisassemble.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
+				Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
 			
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
 		} catch (CozinhaNaoEncontradaExcpetion e) {
@@ -132,12 +132,14 @@ public class RestauranteController {
 	public RestauranteDTO atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteIpunt restauranteInput) {
 		
 		try {
-			Restaurante restaurante = restauranteInputDisassemble.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
+			//Restaurante restaurante = restauranteInputDisassemble.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
 			
 			Restaurante restauranteAtual = cadastroRestaurante.BuscarOuFalhar(restauranteId);
 			
-			BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro",
-					"produtos");
+			restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
+			
+			//BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro",
+				//	"produtos");
 			
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 
