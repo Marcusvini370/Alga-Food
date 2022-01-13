@@ -16,17 +16,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
+
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.algafood.core.validation.Groups;
 import com.algafood.core.validation.ValorZeroIncluiDescricao;
 
 
@@ -44,18 +38,15 @@ public class Restaurante {
 	@Id
 	private Long id;
 
-	//@NotBlank
+	
 	@Column(nullable = false)
 	private String nome;
 
-	//@NotNull
-	//@PositiveOrZero // @DecimalMin("0")
+	
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
-	//@Valid // valida tbm as propriedades de cozinha
-	//@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-	//@NotNull
+	
 	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
@@ -71,23 +62,23 @@ public class Restaurante {
 
 	@Embedded // Endereco faz parte da entidade Restaurante
 	private Endereco endereco;
+	
+	private boolean ativo = Boolean.TRUE; //Instancia true como padrão
 
 	@ManyToMany
-	@JoinTable(name = "restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), // o
-																											// JoinColumns
-																											// define as
-																											// colunas
-																											// da chave
-																											// estrangeira
-																											// dessa
-																											// tabela
-																											// intermediária
-			inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id")) // o inverse define a coluna estrangeira da
-																			// intermediária com referência a entidade
-																			// FormaPagamento
+	@JoinTable(name = "restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), 
+	inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento> formasPagamento = new ArrayList<>();
 
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
+	
+	public void ativar() {
+		setAtivo(true);
+	}
+	
+	public void inativar() {
+		setAtivo(false);
+	}
 
 }
