@@ -92,10 +92,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			return Problem.Object.builder().name(name).userMessage(message).build();
 		}).collect(Collectors.toList());
 
-		Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).objects(problemObjects)
-				.timestamp(OffsetDateTime.now()).build();
-
-		return handleExceptionInternal(ex, ex.getBindingResult(), headers, status, request);
+		Problem problem = createProblemBuilder(status, problemType, detail)
+		        .userMessage(detail)
+		        .objects(problemObjects)
+		        .build();
+		    
+		    return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 
 	@ExceptionHandler(Exception.class)
