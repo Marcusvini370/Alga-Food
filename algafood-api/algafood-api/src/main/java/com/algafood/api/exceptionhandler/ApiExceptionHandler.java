@@ -209,7 +209,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(EntidadeNaoEncontradaExcpetion.class)
-	public ResponseEntity<?> handleEntidadeNaoEcnotrado(EntidadeNaoEncontradaExcpetion ex, WebRequest request) {
+	public ResponseEntity<?> handleEntidadeNaoEncontrado(EntidadeNaoEncontradaExcpetion ex, WebRequest request) {
 
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
