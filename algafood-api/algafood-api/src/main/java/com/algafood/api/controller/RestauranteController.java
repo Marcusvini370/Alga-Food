@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algafood.api.assembler.RestauranteInputDisassembler;
 import com.algafood.api.assembler.RestauranteModelAssembler;
 import com.algafood.core.validation.ValidacaoException;
+import com.algafood.domain.exception.CidadeNaoEncontradaExcpetion;
 import com.algafood.domain.exception.CozinhaNaoEncontradaExcpetion;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Restaurante;
@@ -95,7 +96,7 @@ public class RestauranteController {
 				Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
 			
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
-		} catch (CozinhaNaoEncontradaExcpetion e) {
+		} catch (CozinhaNaoEncontradaExcpetion | CidadeNaoEncontradaExcpetion e) {
 			throw new NegocioException(e.getMessage());
 		}
 
@@ -140,7 +141,7 @@ public class RestauranteController {
 			
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 
-		} catch (CozinhaNaoEncontradaExcpetion e) {
+		} catch (CozinhaNaoEncontradaExcpetion | CidadeNaoEncontradaExcpetion e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}

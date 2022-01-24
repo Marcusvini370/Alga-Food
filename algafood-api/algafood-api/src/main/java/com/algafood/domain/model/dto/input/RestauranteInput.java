@@ -27,5 +27,10 @@ public class RestauranteInput {
 	
 	private boolean ativo;
 	
+	@Valid
+	@NotNull
+	private EnderecoInput endereco;
+	
+	
 
 }
