@@ -159,12 +159,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		String path = joinPath(ex.getPath());
 
 		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
-		String detail = String.format(
-				"A propriedade '%s' não existe. " + "Corrija ou remova essa propriedade e tente novamente.", path);
-
-		Problem problem = createProblemBuilder(status, problemType, detail).userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
+		String detail = String.format("A propriedade '%s' não existe. "
+				+ "Corrija ou remova essa propriedade e tente novamente.", path);
+	
+		Problem problem = createProblemBuilder(status, problemType, detail)
+				.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
 				.build();
-
+		
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 

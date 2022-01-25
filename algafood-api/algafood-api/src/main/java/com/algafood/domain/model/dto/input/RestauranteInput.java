@@ -21,6 +21,7 @@ public class RestauranteInput {
 	@PositiveOrZero // @DecimalMin("0")
 	private BigDecimal taxaFrete;
 	
+	//@JsonIgnoreProperties(value = "nome", allowGetters = true)
 	@Valid
 	@NotNull
 	private CozinhaIdinput cozinha;
