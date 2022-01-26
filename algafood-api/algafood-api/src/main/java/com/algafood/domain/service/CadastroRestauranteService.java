@@ -10,7 +10,6 @@ import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.FormaPagamento;
 import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.repository.RestauranteRepository;
 
 @Service
@@ -81,4 +80,18 @@ public class CadastroRestauranteService {
 		
 		restauranteAtual.inativar();
 	}
+	
+	@Transactional
+	public void abrir(Long restauranteId) {
+	    Restaurante restauranteAtual = BuscarOuFalhar(restauranteId);
+	    
+	    restauranteAtual.abrir();
+	}
+
+	@Transactional
+	public void fechar(Long restauranteId) {
+	    Restaurante restauranteAtual = BuscarOuFalhar(restauranteId);
+	    
+	    restauranteAtual.fechar();
+	}  
 }
