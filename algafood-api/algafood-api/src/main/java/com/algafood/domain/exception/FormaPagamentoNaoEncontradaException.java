@@ -1,6 +1,6 @@
 package com.algafood.domain.exception;
 
-public class FormaPagamentoNaoEncontradaException extends EntidadeNaoEncontradaExcpetion {
+public class FormaPagamentoNaoEncontradaException extends EntidadeNaoEncontradaException {
 
     private static final long serialVersionUID = 1L;
 

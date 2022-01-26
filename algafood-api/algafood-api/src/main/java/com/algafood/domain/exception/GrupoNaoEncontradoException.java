@@ -1,6 +1,6 @@
 package com.algafood.domain.exception;
 
-public class GrupoNaoEncontradoException extends EntidadeNaoEncontradaExcpetion {
+public class GrupoNaoEncontradoException extends EntidadeNaoEncontradaException {
 
     private static final long serialVersionUID = 1L;
 

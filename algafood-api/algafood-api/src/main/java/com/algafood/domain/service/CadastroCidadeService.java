@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.algafood.domain.exception.CidadeNaoEncontradaExcpetion;
 import com.algafood.domain.exception.EntidadeEmusoExcpetion;
-import com.algafood.domain.exception.EntidadeNaoEncontradaExcpetion;
+import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.repository.CidadeRepository;

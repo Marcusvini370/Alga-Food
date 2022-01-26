@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.algafood.core.validation.ValidacaoException;
 import com.algafood.domain.exception.EntidadeEmusoExcpetion;
-import com.algafood.domain.exception.EntidadeNaoEncontradaExcpetion;
+import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -209,8 +209,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 
-	@ExceptionHandler(EntidadeNaoEncontradaExcpetion.class)
-	public ResponseEntity<?> handleEntidadeNaoEncontrado(EntidadeNaoEncontradaExcpetion ex, WebRequest request) {
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
+	public ResponseEntity<?> handleEntidadeNaoEncontrado(EntidadeNaoEncontradaException ex, WebRequest request) {
 
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
