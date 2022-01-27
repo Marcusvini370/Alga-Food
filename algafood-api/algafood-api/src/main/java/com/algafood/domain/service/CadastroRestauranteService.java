@@ -10,6 +10,7 @@ import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.FormaPagamento;
 import com.algafood.domain.model.Restaurante;
+import com.algafood.domain.model.Usuario;
 import com.algafood.domain.repository.RestauranteRepository;
 
 @Service
@@ -25,6 +26,9 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroCidadeService cadastroCidadeService;
+	
+	@Autowired
+	private CadastroUsuarioService cadastroUsuario;
 	
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
@@ -94,4 +98,20 @@ public class CadastroRestauranteService {
 	    
 	    restauranteAtual.fechar();
 	}  
+	
+	@Transactional
+	public void desassociarResponsavel(Long restauranteId, Long usuarioId) {
+	    Restaurante restaurante = BuscarOuFalhar(restauranteId);
+	    Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+	    
+	    restaurante.removerResponsavel(usuario);
+	}
+
+	@Transactional
+	public void associarResponsavel(Long restauranteId, Long usuarioId) {
+	    Restaurante restaurante = BuscarOuFalhar(restauranteId);
+	    Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+	    
+	    restaurante.adicionarResponsavel(usuario);
+	}
 }
