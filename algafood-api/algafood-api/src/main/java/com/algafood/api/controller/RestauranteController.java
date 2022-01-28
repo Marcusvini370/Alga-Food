@@ -32,6 +32,7 @@ import com.algafood.core.validation.ValidacaoException;
 import com.algafood.domain.exception.CidadeNaoEncontradaExcpetion;
 import com.algafood.domain.exception.CozinhaNaoEncontradaExcpetion;
 import com.algafood.domain.exception.NegocioException;
+import com.algafood.domain.exception.RestauranteNaoEncontradoExcpetion;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.model.dto.RestauranteDTO;
 import com.algafood.domain.model.dto.input.RestauranteInput;
@@ -52,11 +53,11 @@ public class RestauranteController {
 
 	@Autowired
 	private SmartValidator validator;
-	
+
 	@Autowired
 	private RestauranteModelAssembler restauranteModelAssembler;
-	
-	@Autowired 
+
+	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
 
 	@GetMapping
@@ -67,11 +68,9 @@ public class RestauranteController {
 	@GetMapping("/{restauranteId}")
 	public RestauranteDTO buscar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = cadastroRestaurante.BuscarOuFalhar(restauranteId);
-		
+
 		return restauranteModelAssembler.toModel(restaurante);
 	}
-
-	
 
 	/*
 	 * @PostMapping public ResponseEntity<?> adicionar(@RequestBody Restaurante
@@ -93,8 +92,11 @@ public class RestauranteController {
 	public RestauranteDTO adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
 
 		try {
-				Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
-			
+			Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput); // Conversão do
+																										// RestauranteInput
+																										// para
+																										// Restaurante
+
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
 		} catch (CozinhaNaoEncontradaExcpetion | CidadeNaoEncontradaExcpetion e) {
 			throw new NegocioException(e.getMessage());
@@ -127,18 +129,22 @@ public class RestauranteController {
 	 */
 
 	@PutMapping("/{restauranteId}")
-	public RestauranteDTO atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteInput restauranteInput) {
-		
+	public RestauranteDTO atualizar(@PathVariable Long restauranteId,
+			@RequestBody @Valid RestauranteInput restauranteInput) {
+
 		try {
-			//Restaurante restaurante = restauranteInputDisassemble.toDomainObject(restauranteInput); //Conversão do RestauranteInput para Restaurante
-			
+			// Restaurante restaurante =
+			// restauranteInputDisassemble.toDomainObject(restauranteInput); //Conversão do
+			// RestauranteInput para Restaurante
+
 			Restaurante restauranteAtual = cadastroRestaurante.BuscarOuFalhar(restauranteId);
-			
+
 			restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
-			
-			//BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro",
-				//	"produtos");
-			
+
+			// BeanUtils.copyProperties(restaurante, restauranteAtual, "id",
+			// "formasPagamento", "endereco", "dataCadastro",
+			// "produtos");
+
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 
 		} catch (CozinhaNaoEncontradaExcpetion | CidadeNaoEncontradaExcpetion e) {
@@ -155,7 +161,7 @@ public class RestauranteController {
 		merge(campos, restauranteAtual, request);
 		validate(restauranteAtual, "restaurante");
 
-		return  null;//atualizar(restauranteId, restauranteAtual);
+		return null;// atualizar(restauranteId, restauranteAtual);
 
 	}
 
@@ -192,29 +198,49 @@ public class RestauranteController {
 			throw new HttpMessageNotReadableException(e.getMessage(), rootCause, serverHttpRequest);
 		}
 	}
-	
+
 	@PutMapping("/{restauranteId}/ativo")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void ativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.ativar(restauranteId);
 	}
-	
+
 	@DeleteMapping("/{restauranteId}/ativo")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void inativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.inativar(restauranteId);
 	}
-	
+
 	@PutMapping("/{restauranteId}/abertura")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void abrir(@PathVariable Long restauranteId) {
-	    cadastroRestaurante.abrir(restauranteId);
+		cadastroRestaurante.abrir(restauranteId);
 	}
 
 	@PutMapping("/{restauranteId}/fechamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void fechar(@PathVariable Long restauranteId) {
-	    cadastroRestaurante.fechar(restauranteId);
-	}        
-	
+		cadastroRestaurante.fechar(restauranteId);
+	}
+
+	@PutMapping("/ativacoes")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> restaurantesIds) {
+		try {
+			cadastroRestaurante.ativar(restaurantesIds);
+		} catch (RestauranteNaoEncontradoExcpetion e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> restaurantesIds) {
+		try {
+			cadastroRestaurante.inativar(restaurantesIds);
+		} catch (RestauranteNaoEncontradoExcpetion e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+
 }

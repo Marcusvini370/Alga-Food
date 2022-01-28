@@ -1,5 +1,7 @@
 package com.algafood.domain.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +85,16 @@ public class CadastroRestauranteService {
 		Restaurante restauranteAtual = BuscarOuFalhar(restauranteId);
 		
 		restauranteAtual.inativar();
+	}
+	
+	@Transactional
+	public void ativar(List<Long> RestauranteIds) {
+		RestauranteIds.forEach(this::ativar);
+	}
+	
+	@Transactional
+	public void inativar(List<Long> RestauranteIds) {
+		RestauranteIds.forEach(this::inativar);
 	}
 	
 	@Transactional
