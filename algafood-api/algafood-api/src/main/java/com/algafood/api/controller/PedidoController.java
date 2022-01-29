@@ -20,7 +20,6 @@ import com.algafood.api.assembler.PedidoResumoModelAssembler;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Pedido;
-import com.algafood.domain.model.StatusPedido;
 import com.algafood.domain.model.Usuario;
 import com.algafood.domain.model.dto.PedidoDTO;
 import com.algafood.domain.model.dto.PedidoResumoDTO;
@@ -54,30 +53,29 @@ public class PedidoController {
         return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
     }
     
-    @GetMapping("/{pedidoId}")
-    public PedidoDTO buscar(@PathVariable Long pedidoId) {
-        Pedido pedido = emissaoPedido.buscarOuFalhar(pedidoId);
+    @GetMapping("/{codigoPedido}")
+    public PedidoDTO buscar(@PathVariable String codigoPedido) {
+        Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
         
         return pedidoModelAssembler.toModel(pedido);
     }      
     
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public PedidoDTO adicionar(@Valid @RequestBody PedidoInput pedidoInput) {
-        try {
-            Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
+	@ResponseStatus(HttpStatus.CREATED)
+	public PedidoDTO adicionar(@Valid @RequestBody PedidoInput pedidoInput) {
+		try {
+			Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
 
-            // TODO pegar usuário autenticado
-            novoPedido.setCliente(new Usuario());
-            novoPedido.getCliente().setId(1L);
-            novoPedido.setStatus(StatusPedido.CRIADO);
+			// TODO pegar usuário autenticado
+			novoPedido.setCliente(new Usuario());
+			novoPedido.getCliente().setId(1L);
 
-            novoPedido = emissaoPedido.emitir(novoPedido);
+			novoPedido = emissaoPedido.emitir(novoPedido);
 
-            return pedidoModelAssembler.toModel(novoPedido);
-        } catch (EntidadeNaoEncontradaException e) {
-            throw new NegocioException(e.getMessage(), e);
-        }
-    }
+			return pedidoModelAssembler.toModel(novoPedido);
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
     
 }           

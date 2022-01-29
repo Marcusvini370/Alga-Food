@@ -18,6 +18,7 @@ import com.algafood.domain.repository.PedidoRepository;
 @Service
 public class EmissaoPedidoService {
 	
+
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
 
@@ -32,6 +33,9 @@ public class EmissaoPedidoService {
 
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
 
 	@Transactional
 	public Pedido emitir(Pedido pedido) {
@@ -71,12 +75,9 @@ public class EmissaoPedidoService {
 	        item.setPrecoUnitario(produto.getPreco());
 	    });
 	}
-
-    @Autowired
-    private PedidoRepository pedidoRepository;
     
-    public Pedido buscarOuFalhar(Long pedidoId) {
-        return pedidoRepository.findById(pedidoId)
-            .orElseThrow(() -> new PedidoNaoEncontradoException(pedidoId));
-    }            
-}        
+    public Pedido buscarOuFalhar(String codigo) {
+        return pedidoRepository.findByCodigo(codigo)
+            .orElseThrow(() -> new PedidoNaoEncontradoException(codigo));
+    }  
+}

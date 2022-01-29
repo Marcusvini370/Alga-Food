@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -17,8 +18,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.algafood.domain.exception.NegocioException;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,6 +46,8 @@ public class Pedido {
 
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;
+	
+	private String codigo;
 
 	@CreationTimestamp
 	private OffsetDateTime dataCriacao;
@@ -75,6 +81,33 @@ public class Pedido {
 	    this.valorTotal = this.subtotal.add(this.taxaFrete);
 	}
 
+	public void confirmar() {
+		setStatus(StatusPedido.CONFIRMADO);
+		setDataConfirmacao(OffsetDateTime.now());
+	}
 	
+	public void entregar() {
+		setStatus(StatusPedido.ENTREGUE);
+		setDataEntrega(OffsetDateTime.now());
+	}
+	
+	public void cancelar() {
+		setStatus(StatusPedido.CANCELADO);
+		setDataCancelamento(OffsetDateTime.now());
+	}
+
+	private void setStatus(StatusPedido novoStatus) {
+		if (getStatus().naoPodeAlterarPara(novoStatus)) {
+				throw new NegocioException(String.format("Status do pedido %s não pode ser alterado de %s para %s", 
+	                  getCodigo(), getStatus().getDescricao(),
+	                  novoStatus.getDescricao()));//pega o id e o status e o que quer mudar
+			}
+		this.status = novoStatus; //se der certo atribui o status para o novo
+		}
+	
+	@PrePersist
+	private void gerarCodigo() {
+		setCodigo(UUID.randomUUID().toString());
+	}
 
 }
