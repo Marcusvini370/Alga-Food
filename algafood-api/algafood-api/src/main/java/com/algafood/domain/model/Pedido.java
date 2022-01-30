@@ -45,7 +45,7 @@ public class Pedido {
 	private Endereco enderecoEntrega;
 
 	@Enumerated(EnumType.STRING)
-	private StatusPedido status;
+	private StatusPedido status = StatusPedido.CRIADO;
 	
 	private String codigo;
 

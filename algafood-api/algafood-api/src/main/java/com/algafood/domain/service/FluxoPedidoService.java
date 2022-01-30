@@ -16,7 +16,6 @@ public class FluxoPedidoService {
 	@Transactional
 	public void conformar(String codogioPedido) {
 		Pedido pedido = emissaoPedido.buscarOuFalhar(codogioPedido);
-
 		pedido.confirmar();
 
 	}
@@ -24,7 +23,6 @@ public class FluxoPedidoService {
 	@Transactional
 	public void cancelar(String codogioPedido) {
 		Pedido pedido = emissaoPedido.buscarOuFalhar(codogioPedido);
-
 		pedido.cancelar();
 	}
 
