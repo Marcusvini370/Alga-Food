@@ -1,23 +1,13 @@
 package com.algafood.api.controller;
 
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.RestauranteInputDisassembler;
 import com.algafood.api.assembler.RestauranteModelAssembler;
-import com.algafood.core.validation.ValidacaoException;
 import com.algafood.domain.exception.CidadeNaoEncontradaExcpetion;
 import com.algafood.domain.exception.CozinhaNaoEncontradaExcpetion;
 import com.algafood.domain.exception.NegocioException;
@@ -36,10 +25,10 @@ import com.algafood.domain.exception.RestauranteNaoEncontradoExcpetion;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.model.dto.RestauranteDTO;
 import com.algafood.domain.model.dto.input.RestauranteInput;
+import com.algafood.domain.model.dto.view.RestauranteView;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -52,18 +41,23 @@ public class RestauranteController {
 	private CadastroRestauranteService cadastroRestaurante;
 
 	@Autowired
-	private SmartValidator validator;
-
-	@Autowired
 	private RestauranteModelAssembler restauranteModelAssembler;
 
 	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
-
-	@GetMapping
+	
+	
+	
+	@GetMapping@JsonView(RestauranteView.resumo.class)
 	public List<RestauranteDTO> listar() {
 		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
 	}
+	
+	@JsonView(RestauranteView.apenasNome.class)
+	@GetMapping(params = "projecao=apenas-nome")
+	public List<RestauranteDTO> listarApenasNomes() {
+		return listar();
+	} 
 
 	@GetMapping("/{restauranteId}")
 	public RestauranteDTO buscar(@PathVariable Long restauranteId) {
@@ -71,21 +65,6 @@ public class RestauranteController {
 
 		return restauranteModelAssembler.toModel(restaurante);
 	}
-
-	/*
-	 * @PostMapping public ResponseEntity<?> adicionar(@RequestBody Restaurante
-	 * restaurante){ //<?> parametro coringa try { restaurante =
-	 * cadastroRestaurante.salvar(restaurante);
-	 * 
-	 * return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
-	 * 
-	 * }catch(EntidadeNaoEncontradaExcpetion e) { return
-	 * ResponseEntity.badRequest().body(e.getMessage());
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -103,30 +82,6 @@ public class RestauranteController {
 		}
 
 	}
-
-	/*
-	 * @PutMapping("/{restauranteId}") public ResponseEntity<?>
-	 * atualizar(@PathVariable Long restauranteId,
-	 * 
-	 * @RequestBody Restaurante restaurante){
-	 * 
-	 * try { Restaurante restauranteAtual =
-	 * restauranteRepository.findById(restauranteId).orElse(null);
-	 * 
-	 * if(restauranteAtual != null) { BeanUtils.copyProperties(restaurante,
-	 * restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro",
-	 * "produtos");
-	 * 
-	 * Restaurante restauranteSalvo = cadastroRestaurante.salvar(restauranteAtual);
-	 * 
-	 * return ResponseEntity.ok(restauranteSalvo);
-	 * 
-	 * } return ResponseEntity.notFound().build();
-	 * 
-	 * 
-	 * }catch(EntidadeNaoEncontradaExcpetion e) { return
-	 * ResponseEntity.badRequest().body(e.getMessage()); } }
-	 */
 
 	@PutMapping("/{restauranteId}")
 	public RestauranteDTO atualizar(@PathVariable Long restauranteId,
@@ -149,53 +104,6 @@ public class RestauranteController {
 
 		} catch (CozinhaNaoEncontradaExcpetion | CidadeNaoEncontradaExcpetion e) {
 			throw new NegocioException(e.getMessage());
-		}
-	}
-
-	@PatchMapping("/{restauranteId}")
-	public RestauranteDTO atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos,
-			HttpServletRequest request) {
-
-		Restaurante restauranteAtual = cadastroRestaurante.BuscarOuFalhar(restauranteId);
-
-		merge(campos, restauranteAtual, request);
-		validate(restauranteAtual, "restaurante");
-
-		return null;// atualizar(restauranteId, restauranteAtual);
-
-	}
-
-	private void validate(Restaurante restaurante, String objectName) {
-		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
-		validator.validate(restaurante, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			throw new ValidacaoException(bindingResult);
-		}
-	}
-
-	private void merge(Map<String, Object> camposOrigem, Restaurante restauranteDestino, HttpServletRequest request) {
-
-		ServletServerHttpRequest serverHttpRequest = new ServletServerHttpRequest(request);
-
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
-			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-
-			Restaurante restauranteOrigem = objectMapper.convertValue(camposOrigem, Restaurante.class);
-
-			camposOrigem.forEach((nomePropriedade, valorPropriedade) -> {
-				Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
-				field.setAccessible(true);
-
-				Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
-
-				ReflectionUtils.setField(field, restauranteDestino, novoValor);
-			});
-		} catch (IllegalArgumentException e) {
-			Throwable rootCause = ExceptionUtils.getRootCause(e);
-			throw new HttpMessageNotReadableException(e.getMessage(), rootCause, serverHttpRequest);
 		}
 	}
 
