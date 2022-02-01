@@ -25,7 +25,9 @@ import com.algafood.domain.model.dto.PedidoDTO;
 import com.algafood.domain.model.dto.PedidoResumoDTO;
 import com.algafood.domain.model.dto.input.PedidoInput;
 import com.algafood.domain.repository.PedidoRepository;
+import com.algafood.domain.repository.filter.PedidoFilter;
 import com.algafood.domain.service.EmissaoPedidoService;
+import com.algafood.infracstruture.repository.spec.PedidoSpecs;
 
 @RestController
 @RequestMapping(value = "/pedidos")
@@ -50,8 +52,8 @@ public class PedidoController {
     
     
     @GetMapping
-    public List<PedidoResumoDTO> listar() {
-        List<Pedido> todosPedidos = pedidoRepository.findAll();
+    public List<PedidoResumoDTO> pesquisar(PedidoFilter filtro) {
+        List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro));
         return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
     }
     
