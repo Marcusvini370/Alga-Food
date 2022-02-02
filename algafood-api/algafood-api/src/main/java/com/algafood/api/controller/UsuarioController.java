@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.UsuarioInputDisassembler;
 import com.algafood.api.assembler.UsuarioModelAssembler;
+import com.algafood.api.dto.UsuarioDTO;
+import com.algafood.api.dto.input.SenhaInput;
+import com.algafood.api.dto.input.UsuarioComSenhaInput;
+import com.algafood.api.dto.input.UsuarioInput;
 import com.algafood.domain.model.Usuario;
-import com.algafood.domain.model.dto.UsuarioDTO;
-import com.algafood.domain.model.dto.input.SenhaInput;
-import com.algafood.domain.model.dto.input.UsuarioComSenhaInput;
-import com.algafood.domain.model.dto.input.UsuarioInput;
 import com.algafood.domain.repository.UsuarioRepository;
 import com.algafood.domain.service.CadastroUsuarioService;
 

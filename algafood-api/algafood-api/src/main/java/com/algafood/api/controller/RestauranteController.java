@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.RestauranteInputDisassembler;
 import com.algafood.api.assembler.RestauranteModelAssembler;
+import com.algafood.api.dto.RestauranteDTO;
+import com.algafood.api.dto.input.RestauranteInput;
+import com.algafood.api.dto.view.RestauranteView;
 import com.algafood.domain.exception.CidadeNaoEncontradaExcpetion;
 import com.algafood.domain.exception.CozinhaNaoEncontradaExcpetion;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.exception.RestauranteNaoEncontradoExcpetion;
 import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.model.dto.RestauranteDTO;
-import com.algafood.domain.model.dto.input.RestauranteInput;
-import com.algafood.domain.model.dto.view.RestauranteView;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.annotation.JsonView;

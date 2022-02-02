@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.PermissaoDTO;
 import com.algafood.domain.model.Permissao;
-import com.algafood.domain.model.dto.PermissaoDTO;
 
 @Component
 public class PermissaoModelAssembler {

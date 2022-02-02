@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.ProdutoInputDisassembler;
 import com.algafood.api.assembler.ProdutoModelAssembler;
+import com.algafood.api.dto.ProdutoDTO;
+import com.algafood.api.dto.input.ProdutoInput;
 import com.algafood.domain.model.Produto;
 import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.model.dto.ProdutoDTO;
-import com.algafood.domain.model.dto.input.ProdutoInput;
 import com.algafood.domain.repository.ProdutoRepository;
 import com.algafood.domain.service.CadastroProdutoService;
 import com.algafood.domain.service.CadastroRestauranteService;

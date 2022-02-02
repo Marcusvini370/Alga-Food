@@ -4,10 +4,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.input.RestauranteInput;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.model.dto.input.RestauranteInput;
 
 @Component
 public class RestauranteInputDisassembler {

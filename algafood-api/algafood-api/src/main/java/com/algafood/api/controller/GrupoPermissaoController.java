@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.PermissaoModelAssembler;
+import com.algafood.api.dto.PermissaoDTO;
 import com.algafood.domain.model.Grupo;
-import com.algafood.domain.model.dto.PermissaoDTO;
 import com.algafood.domain.service.CadastroGrupoService;
 
 @RestController

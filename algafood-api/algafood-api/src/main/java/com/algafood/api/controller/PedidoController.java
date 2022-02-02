@@ -21,17 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algafood.api.assembler.PedidoInputDisassembler;
 import com.algafood.api.assembler.PedidoModelAssembler;
 import com.algafood.api.assembler.PedidoResumoModelAssembler;
+import com.algafood.api.dto.PedidoDTO;
+import com.algafood.api.dto.PedidoResumoDTO;
+import com.algafood.api.dto.input.PedidoInput;
+import com.algafood.core.data.PageableTranslator;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
+import com.algafood.domain.filter.PedidoFilter;
 import com.algafood.domain.model.Pedido;
 import com.algafood.domain.model.Usuario;
-import com.algafood.domain.model.dto.PedidoDTO;
-import com.algafood.domain.model.dto.PedidoResumoDTO;
-import com.algafood.domain.model.dto.input.PedidoInput;
 import com.algafood.domain.repository.PedidoRepository;
-import com.algafood.domain.repository.filter.PedidoFilter;
 import com.algafood.domain.service.EmissaoPedidoService;
 import com.algafood.infracstruture.repository.spec.PedidoSpecs;
+import com.google.common.collect.ImmutableBiMap;
 
 @RestController
 @RequestMapping(value = "/pedidos")
@@ -52,12 +54,12 @@ public class PedidoController {
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
     
-	
-    
-    
     @GetMapping
     public Page<PedidoResumoDTO> pesquisar(PedidoFilter filtro, 
             @PageableDefault(size = 10) Pageable pageable) {
+    	
+    	pageable = traduzirPageable(pageable);
+    	
         Page<Pedido> pedidosPage = pedidoRepository.findAll(
                 PedidoSpecs.usandoFiltro(filtro), pageable);
         
@@ -95,5 +97,17 @@ public class PedidoController {
 			throw new NegocioException(e.getMessage(), e);
 		}
 	}
+    
+    private Pageable traduzirPageable(Pageable apiPageable) {
+    	var mapeamento = ImmutableBiMap.of(
+    			"codigo", "codigo",
+    			"restaurante.nome", "restaurante.nome",
+    			"nomeCliente", "cliente.nome",
+    			"valorTotal", "valorTotal"
+    			);
+    	
+    	return PageableTranslator.translate(apiPageable, mapeamento);
+    	
+    }
     
 }           

@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.GrupoDTO;
 import com.algafood.domain.model.Grupo;
-import com.algafood.domain.model.dto.GrupoDTO;
 
 @Component
 public class GrupoModelAssembler {

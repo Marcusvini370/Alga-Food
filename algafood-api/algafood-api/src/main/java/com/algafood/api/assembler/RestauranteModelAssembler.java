@@ -7,8 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.RestauranteDTO;
 import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.model.dto.RestauranteDTO;
 
 @Component
 public class RestauranteModelAssembler {

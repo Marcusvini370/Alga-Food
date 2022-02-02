@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.GrupoModelAssembler;
+import com.algafood.api.dto.GrupoDTO;
 import com.algafood.domain.model.Usuario;
-import com.algafood.domain.model.dto.GrupoDTO;
 import com.algafood.domain.service.CadastroUsuarioService;
 
 @RestController

@@ -4,8 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.input.UsuarioInput;
 import com.algafood.domain.model.Usuario;
-import com.algafood.domain.model.dto.input.UsuarioInput;
 
 @Component
 public class UsuarioInputDisassembler {

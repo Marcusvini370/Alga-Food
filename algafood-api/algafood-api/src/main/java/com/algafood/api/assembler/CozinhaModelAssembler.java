@@ -7,8 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.CozinhaDTO;
 import com.algafood.domain.model.Cozinha;
-import com.algafood.domain.model.dto.CozinhaDTO;
 
 @Component
 public class CozinhaModelAssembler {

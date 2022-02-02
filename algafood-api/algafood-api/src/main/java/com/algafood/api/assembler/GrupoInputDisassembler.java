@@ -4,8 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.input.GrupoInput;
 import com.algafood.domain.model.Grupo;
-import com.algafood.domain.model.dto.input.GrupoInput;
 
 @Component
 public class GrupoInputDisassembler {

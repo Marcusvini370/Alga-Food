@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.EstadoInputDisassembler;
 import com.algafood.api.assembler.EstadoModelAssembler;
+import com.algafood.api.dto.EstadoDTO;
+import com.algafood.api.dto.input.EstadoInput;
 import com.algafood.domain.model.Estado;
-import com.algafood.domain.model.dto.EstadoDTO;
-import com.algafood.domain.model.dto.input.EstadoInput;
 import com.algafood.domain.repository.EstadoRepository;
 import com.algafood.domain.service.CadastroEstadoService;
 

@@ -4,8 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.input.EstadoInput;
 import com.algafood.domain.model.Estado;
-import com.algafood.domain.model.dto.input.EstadoInput;
 
 @Component
 public class EstadoInputDisassembler {

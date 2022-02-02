@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.FormaPagamentoInputDisassembler;
 import com.algafood.api.assembler.FormaPagamentoModelAssembler;
+import com.algafood.api.dto.FormaPagamentoDTO;
+import com.algafood.api.dto.input.FormaPagamentoInput;
 import com.algafood.domain.model.FormaPagamento;
-import com.algafood.domain.model.dto.FormaPagamentoDTO;
-import com.algafood.domain.model.dto.input.FormaPagamentoInput;
 import com.algafood.domain.repository.FormaPagamentoRepository;
 import com.algafood.domain.service.CadastroFormaPagamentoService;
 

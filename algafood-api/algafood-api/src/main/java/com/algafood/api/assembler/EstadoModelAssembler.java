@@ -7,8 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.dto.EstadoDTO;
 import com.algafood.domain.model.Estado;
-import com.algafood.domain.model.dto.EstadoDTO;
 
 @Component
 public class EstadoModelAssembler {
