@@ -1,4 +1,4 @@
-package com.algafood.infracstruture.service;
+package com.algafood.infracstruture.service.query;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +62,7 @@ public class VendaQueryServiceImpl implements VendaQueryService{
 		predicates.add(root.get("status").in(
 		        StatusPedido.CONFIRMADO, StatusPedido.ENTREGUE));
 		query.where(predicates.toArray(new Predicate[0]));
+		query.groupBy(functionDateDataCriacao);
 		
 		return manager.createQuery(query).getResultList();
 	}
