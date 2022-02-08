@@ -32,16 +32,19 @@ public class EstatisticasController {
 		return  vendaQueryService.consultarVendasDiarias(filtro, timeOffset);
 	}
 	
-	@GetMapping(value = "/vendas-diarias", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro,
-			@RequestParam(required = false, defaultValue="+00:00") String timeOffset){
+	@GetMapping(value = "/vendas-diarias", produces = MediaType.APPLICATION_PDF_VALUE) 
+	public 	ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro,
+	 @RequestParam(required = false, defaultValue = "+00:00") String timeOfset) {
 		
-			byte[] bytesPdf = vendaReportService.emitirVendasDiarias(filtro, timeOffset);
-			
-			var headers = new HttpHeaders();
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=vendas-diarias.pdf");
+		byte[] bytesPdf = vendaReportService.emitirVendasDiarias(filtro, timeOfset);
 		
-		return  ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).headers(headers).body(bytesPdf);
+		var headers = new HttpHeaders(); //filename nome padrão ao baixar o pdf
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=vendas-diaria.pdf");//attachment relatório para dowload
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.APPLICATION_PDF)
+                .headers(headers)
+				.body(bytesPdf);
 	}
 
 }
