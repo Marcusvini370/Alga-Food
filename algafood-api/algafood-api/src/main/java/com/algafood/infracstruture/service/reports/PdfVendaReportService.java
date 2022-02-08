@@ -28,7 +28,7 @@ public class PdfVendaReportService implements VendaReportService{
 			var parametros = new HashMap<String, Object>();
 			parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));//passa o local br pt
 			
-			//dataSource daonde vem os dados para preencher esse relatorio
+			//dataSource da onde vem os dados para preencher esse relatorio
 			var vendasDiarias = vendaQueryService.consultarVendasDiarias(filtro, timeOffset); //é uma coleção de dados de java beans
 			var dataSource = new JRBeanCollectionDataSource(vendasDiarias);
 			var jasperPrint = JasperFillManager.fillReport(inputStream, parametros, dataSource);
