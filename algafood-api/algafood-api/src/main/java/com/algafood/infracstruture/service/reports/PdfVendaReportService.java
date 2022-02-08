@@ -23,7 +23,7 @@ public class PdfVendaReportService implements VendaReportService{
 	@Override
 	public byte[] emitirVendasDiarias(VendaDiariaFilter filtro, String timeOffset) {
 		try {
-			var inputStream = this.getClass().getResourceAsStream("/relatorios/venda-diaria.jasper"); //quer buscar um arquivo fluxo de dados
+			var inputStream = this.getClass().getResourceAsStream("/relatorios/vendas-diarias.jasper"); //quer buscar um arquivo fluxo de dados
 			
 			var parametros = new HashMap<String, Object>();
 			parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));//passa o local br pt
