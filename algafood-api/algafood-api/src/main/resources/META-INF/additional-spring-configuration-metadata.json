@@ -23,5 +23,20 @@
     "name": "algafood.storage.s3.id-chave-acesso-secreta",
     "type": "java.lang.String",
     "description": "A description for 'algafood.storage.s3.id-chave-acesso-secreta'"
+  },
+  {
+    "name": "algafood.storage.local.diretorio-fotos",
+    "type": "java.lang.String",
+    "description": "A description for 'algafood.storage.local.diretorio-fotos'"
+  },
+  {
+    "name": "algafood.storage.s3.chave-acesso-secreta",
+    "type": "java.lang.String",
+    "description": "A description for 'algafood.storage.s3.chave-acesso-secreta'"
+  },
+  {
+    "name": "algafood.storage.s3.chave-acesso-secreta",
+    "type": "java.lang.String",
+    "description": "A description for 'algafood.storage.s3.chave-acesso-secreta'"
   }
 ]}
