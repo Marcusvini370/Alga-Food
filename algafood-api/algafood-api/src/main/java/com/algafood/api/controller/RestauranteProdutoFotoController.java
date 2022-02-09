@@ -1,13 +1,13 @@
 package com.algafood.api.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +31,7 @@ import com.algafood.domain.model.Produto;
 import com.algafood.domain.service.CadastroProdutoService;
 import com.algafood.domain.service.CatalogoFotoProdutoService;
 import com.algafood.domain.service.FotoStorageService;
+import com.algafood.domain.service.FotoStorageService.FotoRecuperada;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
@@ -38,24 +39,24 @@ public class RestauranteProdutoFotoController {
 
 	@Autowired
 	private CadastroProdutoService cadastroProduto;
-	
+
 	@Autowired
 	private FotoProdutoModelAssembler fotoProdutoModelAssembler;
-	
+
 	@Autowired
 	private FotoStorageService fotoStorage;
-	
+
 	@Autowired
 	private CatalogoFotoProdutoService catalogoFotoProduto;
-	
+
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public FotoProdutoDTO atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
-		@Valid FotoProdutoInput fotoProdutoInput) throws IOException {
+			@Valid FotoProdutoInput fotoProdutoInput) throws IOException {
 
 		Produto produto = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
-		
+
 		MultipartFile arquivo = fotoProdutoInput.getArquivo();
-		
+
 		FotoProduto foto = new FotoProduto();
 		foto.setProduto(produto);
 		foto.setDescricao(fotoProdutoInput.getDescricao());
@@ -63,55 +64,58 @@ public class RestauranteProdutoFotoController {
 		foto.setTamanho(arquivo.getSize());
 		foto.setNomeArquivo(arquivo.getOriginalFilename());
 		FotoProduto fotoSalva = catalogoFotoProduto.salvar(foto, arquivo.getInputStream());
-		
+
 		return fotoProdutoModelAssembler.toModel(fotoSalva);
 	}
-	
+
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public FotoProdutoDTO buscar(@PathVariable Long restauranteId, 
-	        @PathVariable Long produtoId) {
-	    FotoProduto fotoProduto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
-	    return fotoProdutoModelAssembler.toModel(fotoProduto);
+	public FotoProdutoDTO buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+		FotoProduto fotoProduto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
+		return fotoProdutoModelAssembler.toModel(fotoProduto);
 	}
-	
+
 	@GetMapping()
-	public ResponseEntity<InputStreamResource> servirFoto(@PathVariable Long restauranteId, 
-	        @PathVariable Long produtoId,@RequestHeader(name = "accept") String acceptHeader)
-	        		throws HttpMediaTypeNotAcceptableException {
+	public ResponseEntity<?> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
+			@RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
 		try {
-	    FotoProduto fotoProduto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
-	    
-	    MediaType mediaTypeFoto = MediaType.parseMediaType(fotoProduto.getContentType());
-	    List<MediaType> mediaTypesAceitas = MediaType.parseMediaTypes(acceptHeader);
-	    
-	    verificarCompatibilidadeMediaType(mediaTypeFoto, mediaTypesAceitas);
-	    
-	    InputStream inputStream = fotoStorage.recuperar(fotoProduto.getNomeArquivo());
-	    
-	    return ResponseEntity.ok().contentType(mediaTypeFoto).body(new InputStreamResource(inputStream));
-	    
-		}catch(EntidadeNaoEncontradaException e) {
+			FotoProduto fotoProduto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
+
+			MediaType mediaTypeFoto = MediaType.parseMediaType(fotoProduto.getContentType());
+			List<MediaType> mediaTypesAceitas = MediaType.parseMediaTypes(acceptHeader);
+
+			verificarCompatibilidadeMediaType(mediaTypeFoto, mediaTypesAceitas);
+
+			FotoRecuperada fotoRecuperada = fotoStorage.recuperar(fotoProduto.getNomeArquivo());
+
+			if (fotoRecuperada.temUrl()) {
+				return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, fotoRecuperada.getUrl())
+						.build();
+			} else {
+				return ResponseEntity.ok().contentType(mediaTypeFoto)
+						.body(new InputStreamResource(fotoRecuperada.getInputStream()));
+			}
+
+		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
 
-	private void verificarCompatibilidadeMediaType(MediaType mediaTypeFoto,
-			List<MediaType> mediaTypesAceitas) throws HttpMediaTypeNotAcceptableException {
-		
+	private void verificarCompatibilidadeMediaType(MediaType mediaTypeFoto, List<MediaType> mediaTypesAceitas)
+			throws HttpMediaTypeNotAcceptableException {
+
 		boolean compativel = mediaTypesAceitas.stream()
 				.anyMatch(mediaTypeAceita -> mediaTypeAceita.isCompatibleWith(mediaTypeFoto));
-		
-		if(!compativel) {
+
+		if (!compativel) {
 			throw new HttpMediaTypeNotAcceptableException(mediaTypesAceitas);
 		}
-		
+
 	}
-	
+
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void excluir(@PathVariable Long restauranteId, 
-	        @PathVariable Long produtoId) {
-	    catalogoFotoProduto.excluir(restauranteId, produtoId);
-	}   
-	
+	public void excluir(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+		catalogoFotoProduto.excluir(restauranteId, produtoId);
+	}
+
 }
