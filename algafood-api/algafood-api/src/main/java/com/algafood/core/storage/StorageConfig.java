@@ -4,13 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.algafood.core.storage.StorageProperties.TipoStorage;
+import com.algafood.domain.service.FotoStorageService;
+import com.algafood.infracstruture.service.storage.LocalFotoStorageService;
+import com.algafood.infracstruture.service.storage.S3FotoStorageService;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Configuration
-public class AmazonS3Config {
+public class StorageConfig {
 	
 	@Autowired
 	private StorageProperties  storageProperties;
@@ -27,6 +31,13 @@ public class AmazonS3Config {
 				.build(); //retorna uma instancia de amazon s3 podendo usa-lá com um component spring
 	}
 	
-	
+	@Bean
+	public FotoStorageService fotoStorageService() {
+		if(TipoStorage.S3.equals(storageProperties.getTipo())) {
+			return new S3FotoStorageService();
+		}else {
+		return new LocalFotoStorageService();
+		}
+	}
 
 }
