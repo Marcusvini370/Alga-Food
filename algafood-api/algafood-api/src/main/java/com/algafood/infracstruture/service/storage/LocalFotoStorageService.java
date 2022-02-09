@@ -14,7 +14,7 @@ import com.algafood.domain.service.FotoStorageService;
 @Service
 public class LocalFotoStorageService implements FotoStorageService {
 
-	@Value("${algafood.storage.local.deretorio-fotos}")
+	@Value("${algafood.storage.local.diretorio-fotos}")
 	private Path diretorioFotos;
 
 	@Override
