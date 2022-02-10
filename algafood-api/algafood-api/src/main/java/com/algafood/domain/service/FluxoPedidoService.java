@@ -18,14 +18,15 @@ public class FluxoPedidoService {
 	private EnvioEmailService envioEmail;
 
 	@Transactional
-	public void conformar(String codogioPedido) {
+	public void confirmar(String codogioPedido) {
 		Pedido pedido = emissaoPedido.buscarOuFalhar(codogioPedido);
 		pedido.confirmar();
 
 		// Montagem do email a ser enviado
 		var mensagem = Mensagem.builder()
 				.assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
-				.corpo("O pedido de código <strong>" + pedido.getCodigo() + "</strong> foi confirmado!")
+				.variavel("pedido", pedido)
+				.corpo("pedido-confirmado.html")
 				.destinatario(pedido.getCliente().getEmail()).build();
 
 		envioEmail.enviar(mensagem);

@@ -20,7 +20,7 @@ public class FluxoPedidoController {
 	@PutMapping("/confirmacao")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void confirmar(@PathVariable String codogioPedido) {
-		fluxoPedido.conformar(codogioPedido);
+		fluxoPedido.confirmar(codogioPedido);
 		
 	}
 	
