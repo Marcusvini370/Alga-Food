@@ -10,5 +10,4 @@ import lombok.Getter;
 public class PedidoConfirmadoEvent {
 	
 	private Pedido pedido;
-
 }

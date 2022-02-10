@@ -22,14 +22,6 @@ public class FluxoPedidoService {
 		Pedido pedido = emissaoPedido.buscarOuFalhar(codogioPedido);
 		pedido.confirmar();
 
-		// Montagem do email a ser enviado
-		/*var mensagem = Mensagem.builder()
-				.assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
-				.variavel("pedido", pedido)
-				.corpo("pedido-confirmado.html")
-				.destinatario(pedido.getCliente().getEmail()).build();
-
-		envioEmail.enviar(mensagem); */
 		pedidoRepository.save(pedido);
 	}
 
