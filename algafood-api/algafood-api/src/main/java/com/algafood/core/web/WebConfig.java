@@ -1,6 +1,10 @@
 package com.algafood.core.web;
 
+import javax.servlet.Filter;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -14,4 +18,10 @@ public class WebConfig implements WebMvcConfigurer{
 		//.allowedOrigins("*")
 		//.maxAge(30)
 	}
+	
+	@Bean
+	public Filter shallowEtagHeaderFilter() { //habilita Etag no cache
+		return new ShallowEtagHeaderFilter();
+	}
+	
 }
