@@ -56,6 +56,10 @@ public class FormaPagamentoController {
     	if(dataUltimaAtualizacao != null) {
     		eTag = String.valueOf(dataUltimaAtualizacao.toEpochSecond());
     	}
+    	//Já temos condições e saber se continua ou não o processamento
+    	if(request.checkNotModified(eTag)) {
+    		return null;
+    	}	
     	
 		List<FormaPagamento> todasFormasPagamentos = formaPagamentoRepository.findAll();
 		
@@ -73,14 +77,32 @@ public class FormaPagamentoController {
 	}
     
     @GetMapping("/{formaPagamentoId}")
-    public ResponseEntity<FormaPagamentoDTO> buscar(@PathVariable Long formaPagamentoId) {
-      FormaPagamento formaPagamento = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
-      
-      FormaPagamentoDTO formaPagamentoModel =  formaPagamentoModelAssembler.toModel(formaPagamento);
-      
-      return ResponseEntity.ok()
-          .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
-          .body(formaPagamentoModel);
+    public ResponseEntity<FormaPagamentoDTO> buscar(@PathVariable Long formaPagamentoId,
+            ServletWebRequest request) {
+        
+        ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+        
+        String eTag = "0";
+        
+        OffsetDateTime dataAtualizacao = formaPagamentoRepository
+                .getDataAtualizacaoById(formaPagamentoId);
+        
+        if (dataAtualizacao != null) {
+            eTag = String.valueOf(dataAtualizacao.toEpochSecond());
+        }
+        
+        if (request.checkNotModified(eTag)) {
+            return null;
+        }
+        
+        FormaPagamento formaPagamento = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
+        
+        FormaPagamentoDTO formaPagamentoModel = formaPagamentoModelAssembler.toModel(formaPagamento);
+        
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+                .eTag(eTag)
+                .body(formaPagamentoModel);
     }
     
     @PostMapping
