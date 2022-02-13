@@ -51,7 +51,11 @@ public class FormaPagamentoController {
 				.toCollectionModel(todasFormasPagamentos);
 		
 		return ResponseEntity.ok()
-				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
+				//.cachePrivate é cache armazenado em caches locais
+				//.cachePulbic é armazenado em caches locais e compartilhados
+				//.cacheControl(CacheControl.noCache()) //ao fazer cache vai precisar fazer validação como na etag
+				.cacheControl(CacheControl.noStore()) //não armazena cache
 				.body(formasPagamentosModel);
 	}
     
