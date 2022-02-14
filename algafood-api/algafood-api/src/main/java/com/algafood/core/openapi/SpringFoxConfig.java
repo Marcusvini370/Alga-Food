@@ -10,6 +10,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.service.Tag;
 
 @Configuration
 public class SpringFoxConfig {
@@ -22,7 +23,8 @@ public class SpringFoxConfig {
           .paths(PathSelectors.any())
          // .paths(PathSelectors.ant("/restaurantes/*")) controlador específico
           .build() //retorna o docket;
-          .apiInfo(apiInfo()); //traz as configurações do método para a documentação
+          .apiInfo(apiInfo()) //traz as configurações do método para a documentação
+          .tags(new Tag("Cidades", "Gerencia as cidades"));
   }
   
   
