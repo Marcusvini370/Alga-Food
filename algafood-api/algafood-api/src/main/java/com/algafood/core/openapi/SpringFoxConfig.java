@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
+import com.algafood.api.exceptionhandler.Problem;
+import com.fasterxml.classmate.TypeResolver;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,6 +21,7 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.Response;
 import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.json.JacksonModuleRegistrar;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
@@ -25,6 +30,9 @@ public class SpringFoxConfig {
 
   @Bean
   public Docket apiDocket() {
+	  
+	  var typeResolver = new TypeResolver();
+	  
     return new Docket(DocumentationType.OAS_30) //configuração da documentação
         .select() //retornando builder para selecionar os endpoints para sempre expostos
           .apis(RequestHandlerSelectors.basePackage("com.algafood.api")) // seleciona pasta dos controladores a documentar
@@ -36,6 +44,7 @@ public class SpringFoxConfig {
           .globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
           .globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
           .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
+          .additionalModels(typeResolver.resolve(Problem.class)) // modelo extra pra adicionar na doc.
           .apiInfo(apiInfo()) //traz as configurações do método para a documentação
           .tags(new Tag("Cidades", "Gerencia as cidades"));
   }
@@ -87,7 +96,11 @@ public class SpringFoxConfig {
 		  );
 		}
   
-  
+		@Bean
+		public JacksonModuleRegistrar springFoxJacksonConfig() {
+			return objectMapper -> objectMapper.registerModule(new JavaTimeModule());
+		}
+
   
   public ApiInfo apiInfo() {
 	  return new ApiInfoBuilder()
