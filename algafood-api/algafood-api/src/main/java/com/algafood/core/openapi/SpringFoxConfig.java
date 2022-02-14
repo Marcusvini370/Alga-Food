@@ -33,11 +33,46 @@ public class SpringFoxConfig {
           .build() //retorna o docket;
           .useDefaultResponseMessages(false) //desativa os código de erro gerado auto
           .globalResponses(HttpMethod.GET, globalGetResponseMessages()) //conf cod de status padrao pro mét get
+          .globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
+          .globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
+          .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
           .apiInfo(apiInfo()) //traz as configurações do método para a documentação
           .tags(new Tag("Cidades", "Gerencia as cidades"));
   }
   
-  
+  private List<Response> globalPostPutResponseMessages() {
+	    return Arrays.asList(
+	        new ResponseBuilder()
+	            .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+	            .description("Requisição inválida (erro do cliente)")
+	            .build(),
+	        new ResponseBuilder()
+	            .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+	            .description("Erro interno no servidor")
+	            .build(),
+	        new ResponseBuilder()
+	            .code(String.valueOf(HttpStatus.NOT_ACCEPTABLE.value()))
+	            .description("Recurso não possui representação que poderia ser aceita pelo consumidor")
+	            .build(),
+	        new ResponseBuilder()
+	            .code(String.valueOf(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()))
+	            .description("Requisição recusada porque o corpo está em um formato não suportado")
+	            .build()
+	    );
+	  }
+
+	  private List<Response> globalDeleteResponseMessages() {
+	    return Arrays.asList(
+	        new ResponseBuilder()
+	            .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+	            .description("Requisição inválida (erro do cliente)")
+	            .build(),
+	        new ResponseBuilder()
+	            .code(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+	            .description("Erro interno no servidor")
+	            .build()
+	    );
+	  }
 
 		private List<Response> globalGetResponseMessages() {
 		  return Arrays.asList(
