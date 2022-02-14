@@ -4,8 +4,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.algafood.api.dto.EstadoDTO;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,13 +12,13 @@ import lombok.Setter;
 @Getter
 public class CidadeInput {
 	
-	
-	@ApiModelProperty(example = "Brasília")
+	 
+	@ApiModelProperty(example = "Brasília", required = true)
 	@NotBlank
 	private String nome;
 	
 	@Valid
 	@NotNull
-	private EstadoDTO estado;
+	private EstadoIdInput estado;
 
 }
