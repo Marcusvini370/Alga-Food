@@ -48,7 +48,8 @@ public class SpringFoxConfig {
           .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
           .additionalModels(typeResolver.resolve(Problem.class)) // modelo extra pra adicionar na doc.
           .apiInfo(apiInfo()) //traz as configurações do método para a documentação
-          .tags(new Tag("Cidades", "Gerencia as cidades"));
+          .tags(new Tag("Cidades", "Gerencia as cidades"),
+          new Tag("Grupos", "Gerencia os grupos de usuários"));
   }
   
   /* O método responseModel não existe na classe ResponseBuilder do SpringFox 3,
