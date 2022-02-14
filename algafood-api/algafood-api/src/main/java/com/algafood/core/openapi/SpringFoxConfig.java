@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.context.request.ServletWebRequest;
 
 import com.algafood.api.dto.CozinhaDTO;
 import com.algafood.api.exceptionhandler.Problem;
@@ -53,6 +54,7 @@ public class SpringFoxConfig {
           .globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
           .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
           .additionalModels(typeResolver.resolve(Problem.class)) // modelo extra pra adicionar na doc.
+          .ignoredParameterTypes(ServletWebRequest.class) // ignora parametros, util pra tirar os n usados
           .directModelSubstitute(Pageable.class, PageableModelOpenApi.class) // organiza a doc de paginação p subst
           .alternateTypeRules(AlternateTypeRules.newRule(
         		  typeResolver.resolve(Page.class, CozinhaDTO.class), CozinhasModelOpenApi.class))
