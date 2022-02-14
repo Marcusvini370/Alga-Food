@@ -58,7 +58,8 @@ public class SpringFoxConfig {
         		  typeResolver.resolve(Page.class, CozinhaDTO.class), CozinhasModelOpenApi.class))
           .apiInfo(apiInfo()) //traz as configurações do método para a documentação
           .tags(new Tag("Cidades", "Gerencia as cidades"),
-          new Tag("Grupos", "Gerencia os grupos de usuários"));
+          new Tag("Grupos", "Gerencia os grupos de usuários"),
+          new Tag("Cozinhas", "Gerencia as cozinhas"));
   }
   
   /* O método responseModel não existe na classe ResponseBuilder do SpringFox 3,
