@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algafood.api.assembler.GrupoModelAssembler;
 import com.algafood.api.dto.GrupoDTO;
+import com.algafood.api.openapi.controller.UsuarioGrupoControllerOpenApi;
 import com.algafood.domain.model.Usuario;
 import com.algafood.domain.service.CadastroUsuarioService;
 
 @RestController
-@RequestMapping(value = "/usuarios/{usuarioId}/grupos")
-public class UsuarioGrupoController {
+@RequestMapping(value = "/usuarios/{usuarioId}/grupos", 
+produces = MediaType.APPLICATION_JSON_VALUE)
+public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi{
 
     @Autowired
     private CadastroUsuarioService cadastroUsuario;
