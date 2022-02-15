@@ -19,9 +19,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import com.algafood.api.dto.CozinhaDTO;
+import com.algafood.api.dto.PedidoResumoDTO;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.openapi.model.CozinhasModelOpenApi;
 import com.algafood.api.openapi.model.PageableModelOpenApi;
+import com.algafood.api.openapi.model.PedidosResumoModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -73,6 +75,9 @@ public class SpringFoxConfig {
           .directModelSubstitute(Pageable.class, PageableModelOpenApi.class) // organiza a doc de paginação p subst
           .alternateTypeRules(AlternateTypeRules.newRule(
         		  typeResolver.resolve(Page.class, CozinhaDTO.class), CozinhasModelOpenApi.class))
+          .alternateTypeRules(AlternateTypeRules.newRule(
+                  typeResolver.resolve(Page.class, PedidoResumoDTO.class),
+                  PedidosResumoModelOpenApi.class))
           .apiInfo(apiInfo()) //traz as configurações do método para a documentação
           .tags(new Tag("Cidades", "Gerencia as cidades"),
           new Tag("Grupos", "Gerencia os grupos de usuários"),

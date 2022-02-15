@@ -61,5 +61,4 @@ public interface GrupoControllerOpenApi {
      void remover(
             @ApiParam(value = "ID de um grupo", example = "1", required = true)
             Long grupoId);
-    
 }
