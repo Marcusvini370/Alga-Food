@@ -1,11 +1,16 @@
 package com.algafood.core.openapi;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLStreamHandler;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
@@ -63,7 +68,8 @@ public class SpringFoxConfig {
           //                .build())
           // )
           .additionalModels(typeResolver.resolve(Problem.class)) // modelo extra pra adicionar na doc.
-          .ignoredParameterTypes(ServletWebRequest.class) // ignora parametros, util pra tirar os n usados
+          .ignoredParameterTypes(ServletWebRequest.class, // ignora parametros, util pra tirar os n usados
+        		  URL.class, URI.class, URLStreamHandler.class, Resource.class, File.class) 
           .directModelSubstitute(Pageable.class, PageableModelOpenApi.class) // organiza a doc de paginação p subst
           .alternateTypeRules(AlternateTypeRules.newRule(
         		  typeResolver.resolve(Page.class, CozinhaDTO.class), CozinhasModelOpenApi.class))
