@@ -72,7 +72,8 @@ public class SpringFoxConfig {
           new Tag("Grupos", "Gerencia os grupos de usuários"),
           new Tag("Cozinhas", "Gerencia as cozinhas"),
           new Tag("Formas de pagamento", "Gerencia as formas de pagamento"),
-          new Tag("Pedidos", "Gerencia os pedidos"));
+          new Tag("Pedidos", "Gerencia os pedidos"),
+          new Tag("Restaurantes", "Gerencia os restaurantes"));
   }
   
   /* O método responseModel não existe na classe ResponseBuilder do SpringFox 3,
