@@ -1,5 +1,7 @@
 package com.algafood.api.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -54,7 +56,27 @@ public class CidadeController implements CidadeControllerOpenApi {
 	@Override
 	@GetMapping("/{cidadeId}")
 	public CidadeDTO buscar(@PathVariable Long cidadeId) {
-		return cidadeModelAssembler.toModel(cadastroCidade.BuscarOuFalhar(cidadeId));
+		
+		CidadeDTO cidadeDTO = cidadeModelAssembler.toModel(cadastroCidade.BuscarOuFalhar(cidadeId));
+		
+		cidadeDTO.add(linkTo(CidadeController.class)
+				.slash(cidadeDTO.getId()).withSelfRel());
+		
+		//cidadeDTO.add(Link.of("http://localhost:8080/cidades/1"));
+//		cidadeModel.add(Link.of("http://localhost:8080/cidades/1", IanaLinkRelations.SELF));
+
+//		cidadeModel.add(Link.of("http://localhost:8080/cidades/", IanaLinkRelations.COLLECTION));
+//		cidadeDTO.add(Link.of("http://localhost:8080/cidades", "cidades"));
+		
+		cidadeDTO.add(linkTo(CidadeController.class)
+				.withRel("cidades"));
+
+//		cidadeDTO.getEstado().add(Link.of("http://localhost:8080/estados/1"));
+		
+		cidadeDTO.getEstado().add(linkTo(EstadoController.class)
+				.slash(cidadeDTO.getEstado().getId()).withSelfRel());
+		
+		return cidadeDTO;
 	}
 
 	@Override
