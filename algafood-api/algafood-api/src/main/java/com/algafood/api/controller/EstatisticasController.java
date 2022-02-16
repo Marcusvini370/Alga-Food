@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algafood.api.dto.input.CozinhaInput;
 import com.algafood.api.openapi.controller.EstatisticasControllerOpenApi;
 import com.algafood.domain.filter.VendaDiariaFilter;
 import com.algafood.domain.model.dto.VendaDiaria;
@@ -33,7 +34,7 @@ public class EstatisticasController implements EstatisticasControllerOpenApi{
 		return  vendaQueryService.consultarVendasDiarias(filtro, timeOffset);
 	}
 	
-	@GetMapping(value = "/vendas-diarias", produces = MediaType.APPLICATION_PDF_VALUE) 
+	@GetMapping(value = "/vendas-diarias/pdf", produces = MediaType.APPLICATION_PDF_VALUE) 
 	public 	ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro,
 	 @RequestParam(required = false, defaultValue = "+00:00") String timeOfset) {
 		
