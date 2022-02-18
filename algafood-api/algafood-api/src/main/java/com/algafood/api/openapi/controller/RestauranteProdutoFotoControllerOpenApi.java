@@ -55,22 +55,23 @@ public interface RestauranteProdutoFotoControllerOpenApi {
             @ApiParam(value = "ID do produto", example = "1", required = true)
             Long produtoId);
 
-    @ApiOperation(value = "Busca a foto do produto de um restaurante",
-            produces = "application/json, image/jpeg, image/png")
+    @ApiOperation(value = "Busca a foto do produto de um restaurante", produces = "image/jpeg, image/png, application/json")
     @ApiResponses({
-        @ApiResponse(responseCode = "400", description = "ID do restaurante ou produto inválido", 
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class))),
-        @ApiResponse(responseCode = "404", description = "Foto de produto não encontrada", 
-        content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class)))
+            @ApiResponse(responseCode = "200",description = "OK", content = @Content(schema = @Schema(implementation = FotoProdutoDTO.class), mediaType = "application/json")),
+            @ApiResponse(responseCode = "200",description = "OK", content = @Content(mediaType = "image/png")),
+            @ApiResponse(responseCode = "200",description = "OK", content = @Content(mediaType = "image/jpeg")),
+            @ApiResponse(responseCode = "400",description = "ID do restaurante ou produto inválido", content = @Content(schema = @Schema(implementation = Problem.class))),
+            @ApiResponse(responseCode = "404",description = "Foto de produto não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))
     })
-    FotoProdutoDTO buscar(
+    ResponseEntity<?> buscar(
             @ApiParam(value = "ID do restaurante", example = "1", required = true)
-            Long restauranteId,
-            
+                    Long restauranteId,
             @ApiParam(value = "ID do produto", example = "1", required = true)
-            Long produtoId);
+                    Long produtoId,
+            @ApiParam(hidden = true , required = false)
+                    String acceptHeader)
+                            throws HttpMediaTypeNotAcceptableException;
 
-    @ApiOperation(value = "Busca a foto do produto de um restaurante", hidden = true)
-    ResponseEntity<?> servirFoto(Long restauranteId, Long produtoId, String acceptHeader) 
-            throws HttpMediaTypeNotAcceptableException;
+          
 }
+    

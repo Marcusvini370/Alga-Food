@@ -2,11 +2,13 @@ package com.algafood.api.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,8 +51,27 @@ public class CidadeController implements CidadeControllerOpenApi {
 
 	@Override
 	@GetMapping
-	public List<CidadeDTO> listar() {
-		return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
+	public CollectionModel<CidadeDTO> listar() {
+		List<CidadeDTO> cidadesDTO = cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
+		
+		cidadesDTO.forEach(cidadeModel -> {
+			
+			cidadeModel.add(linkTo(methodOn(CidadeController.class)
+					.buscar(cidadeModel.getId())).withSelfRel());
+			
+			cidadeModel.add(linkTo(methodOn(CidadeController.class)
+					.listar()).withRel("cidades"));
+			
+			cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class)
+					.buscar(cidadeModel.getEstado().getId())).withSelfRel());
+		});
+		
+		 CollectionModel<CidadeDTO> cidadesCollectionModel = CollectionModel.of(cidadesDTO);
+		 
+		 cidadesCollectionModel.add(linkTo(CidadeController.class).withSelfRel());
+		 
+		return cidadesCollectionModel;
+		
 	}
 
 	@Override

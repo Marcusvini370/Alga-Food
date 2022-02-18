@@ -1,6 +1,6 @@
 package com.algafood.api.openapi.controller;
 
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 import com.algafood.api.dto.CidadeDTO;
 import com.algafood.api.dto.input.CidadeInput;
@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public interface CidadeControllerOpenApi {
 
 	@ApiOperation("Lista as cidades")
-	List<CidadeDTO> listar();
+	CollectionModel<CidadeDTO> listar();
 
 	@ApiOperation("Busca uma cidade por ID")
 	@ApiResponses({

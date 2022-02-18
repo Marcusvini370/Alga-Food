@@ -1,12 +1,14 @@
 package com.algafood.api.dto;
 
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 //@ApiModel(value = "Cidade", description = "Representa uma cidade")
+@Relation(collectionRelation = "cidades")
 @Setter
 @Getter
 public class CidadeDTO extends RepresentationModel<CidadeDTO>{
