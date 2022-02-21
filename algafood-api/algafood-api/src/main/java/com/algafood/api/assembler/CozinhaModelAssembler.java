@@ -1,29 +1,38 @@
 package com.algafood.api.assembler;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.controller.CozinhaController;
 import com.algafood.api.dto.CozinhaDTO;
 import com.algafood.domain.model.Cozinha;
 
 @Component
-public class CozinhaModelAssembler {
+public class CozinhaModelAssembler extends RepresentationModelAssemblerSupport<Cozinha, CozinhaDTO>{
 
-    @Autowired
+    public CozinhaModelAssembler() {
+		super(CozinhaController.class, CozinhaDTO.class);
+		
+	}
+
+	@Autowired
     private ModelMapper modelMapper;
     
+	@Override
     public CozinhaDTO toModel(Cozinha cozinha) {
-        return modelMapper.map(cozinha, CozinhaDTO.class);
+		CozinhaDTO cozinhaModel = createModelWithId(cozinha.getId(), cozinha);
+		modelMapper.map(cozinha, cozinhaModel);
+		 
+		 cozinhaModel.add(linkTo(CozinhaController.class).withRel("cozinhas"));
+		 
+		 
+		 return cozinhaModel;
     }
     
-    public List<CozinhaDTO> toCollectionModel(List<Cozinha> cozinhas) {
-        return cozinhas.stream()
-                .map(cozinha -> toModel(cozinha))
-                .collect(Collectors.toList());
-    }   
+    
     
 }        

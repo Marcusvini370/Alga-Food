@@ -37,5 +37,4 @@ public class EstadoModelAssembler  extends RepresentationModelAssemblerSupport<E
         return super.toCollectionModel(entities)
             .add(linkTo(EstadoController.class).withSelfRel());
     } 
-    
 }
