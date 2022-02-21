@@ -1,8 +1,5 @@
 package com.algafood.api.controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algafood.api.AlgaLinks;
 import com.algafood.api.assembler.UsuarioModelAssembler;
 import com.algafood.api.dto.UsuarioDTO;
 import com.algafood.api.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
@@ -32,13 +30,15 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     @Autowired
     private UsuarioModelAssembler usuarioModelAssembler;
     
+    @Autowired
+    private AlgaLinks algaLinks;
+    
     @GetMapping
     public CollectionModel<UsuarioDTO> listar(@PathVariable Long restauranteId) {
         Restaurante restaurante = cadastroRestaurante.BuscarOuFalhar(restauranteId);
         return usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis())
         		.removeLinks()
-        		.add(linkTo(methodOn(RestauranteUsuarioResponsavelController.class)
-        				.listar(restauranteId)).withSelfRel());
+        		.add(algaLinks.linkToResponsaveisRestaurante(restauranteId));
     }
     
     @DeleteMapping("/{usuarioId}")

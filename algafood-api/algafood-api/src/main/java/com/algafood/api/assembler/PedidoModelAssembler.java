@@ -5,11 +5,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.TemplateVariable;
-import org.springframework.hateoas.TemplateVariable.VariableType;
-import org.springframework.hateoas.TemplateVariables;
-import org.springframework.hateoas.UriTemplate;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
@@ -43,26 +38,21 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
          
          pedidoModel.add(algaLinks.linkToPedidos());
          
-         //pedidoModel.add(linkTo(PedidoController.class).withRel("pedidos"));
+         pedidoModel.getRestaurante().add(
+                 algaLinks.linkToRestaurante(pedido.getRestaurante().getId()));
          
-         pedidoModel.getRestaurante().add(linkTo(methodOn(RestauranteController.class)
-                 .buscar(pedido.getRestaurante().getId())).withSelfRel());
+         pedidoModel.getCliente().add(
+                 algaLinks.linkToUsuario(pedido.getCliente().getId()));
          
-         pedidoModel.getCliente().add(linkTo(methodOn(UsuarioController.class)
-                 .buscar(pedido.getCliente().getId())).withSelfRel());
+         pedidoModel.getFormaPagamento().add(
+                 algaLinks.linkToFormaPagamento(pedido.getFormaPagamento().getId()));
          
-         // Passamos null no segundo argumento, porque é indiferente para a
-         // construção da URL do recurso de forma de pagamento
-         pedidoModel.getFormaPagamento().add(linkTo(methodOn(FormaPagamentoController.class)
-                 .buscar(pedido.getFormaPagamento().getId(), null)).withSelfRel());
-         
-         pedidoModel.getEnderecoEntrega().getCidade().add(linkTo(methodOn(CidadeController.class)
-                 .buscar(pedido.getEnderecoEntrega().getCidade().getId())).withSelfRel());
+         pedidoModel.getEnderecoEntrega().getCidade().add(
+                 algaLinks.linkToCidade(pedido.getEnderecoEntrega().getCidade().getId()));
          
          pedidoModel.getItens().forEach(item -> {
-             item.add(linkTo(methodOn(RestauranteProdutoController.class)
-                     .buscar(pedidoModel.getRestaurante().getId(), item.getProdutoId()))
-                     .withRel("produto"));
+             item.add(algaLinks.linkToProduto(
+                     pedidoModel.getRestaurante().getId(), item.getProdutoId(), "produto"));
          });
          
          return pedidoModel;
