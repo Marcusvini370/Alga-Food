@@ -1,10 +1,5 @@
 package com.algafood.api.controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,53 +47,13 @@ public class CidadeController implements CidadeControllerOpenApi {
 	@Override
 	@GetMapping
 	public CollectionModel<CidadeDTO> listar() {
-		List<CidadeDTO> cidadesDTO = cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
-		
-		cidadesDTO.forEach(cidadeModel -> {
-			
-			cidadeModel.add(linkTo(methodOn(CidadeController.class)
-					.buscar(cidadeModel.getId())).withSelfRel());
-			
-			cidadeModel.add(linkTo(methodOn(CidadeController.class)
-					.listar()).withRel("cidades"));
-			
-			cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class)
-					.buscar(cidadeModel.getEstado().getId())).withSelfRel());
-		});
-		
-		 CollectionModel<CidadeDTO> cidadesCollectionModel = CollectionModel.of(cidadesDTO);
-		 
-		 cidadesCollectionModel.add(linkTo(CidadeController.class).withSelfRel());
-		 
-		return cidadesCollectionModel;
-		
+		return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
 	}
 
 	@Override
 	@GetMapping("/{cidadeId}")
 	public CidadeDTO buscar(@PathVariable Long cidadeId) {
-		
-		CidadeDTO cidadeDTO = cidadeModelAssembler.toModel(cadastroCidade.BuscarOuFalhar(cidadeId));
-		
-		cidadeDTO.add(linkTo(methodOn(CidadeController.class)
-				.buscar(cidadeDTO.getId())).withSelfRel());
-
-//		cidadeModel.add(linkTo(CidadeController.class)
-//				.slash(cidadeModel.getId()).withSelfRel());
-
-		cidadeDTO.add(linkTo(methodOn(CidadeController.class)
-				.listar()).withRel("cidades"));
-
-//		cidadeModel.add(linkTo(CidadeController.class)
-//				.withRel("cidades"));
-
-		cidadeDTO.getEstado().add(linkTo(methodOn(EstadoController.class)
-				.buscar(cidadeDTO.getEstado().getId())).withSelfRel());
-
-//		cidadeModel.getEstado().add(linkTo(EstadoController.class)
-//				.slash(cidadeModel.getEstado().getId()).withSelfRel());
-
-		return cidadeDTO;
+		return cidadeModelAssembler.toModel(cadastroCidade.BuscarOuFalhar(cidadeId));
 	}
 
 	@Override
