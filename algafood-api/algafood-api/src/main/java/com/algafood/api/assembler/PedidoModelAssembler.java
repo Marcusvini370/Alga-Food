@@ -13,6 +13,7 @@ import org.springframework.hateoas.UriTemplate;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import com.algafood.api.AlgaLinks;
 import com.algafood.api.controller.CidadeController;
 import com.algafood.api.controller.FormaPagamentoController;
 import com.algafood.api.controller.PedidoController;
@@ -28,6 +29,8 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
     @Autowired
     private ModelMapper modelMapper;
     
+    @Autowired
+	private AlgaLinks algaLinks;
 
     public PedidoModelAssembler() {
         super(PedidoController.class, PedidoDTO.class);
@@ -38,14 +41,7 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
     	 PedidoDTO pedidoModel = createModelWithId(pedido.getCodigo(), pedido);
          modelMapper.map(pedido, pedidoModel);
          
-         TemplateVariables pageVariables = new TemplateVariables(
-        		 new TemplateVariable("page", VariableType.REQUEST_PARAM),
-        		 new TemplateVariable("size", VariableType.REQUEST_PARAM),
-        		 new TemplateVariable("sort", VariableType.REQUEST_PARAM));
-         
-         String pedidosUrl = linkTo(PedidoController.class).toUri().toString();
-         
-         pedidoModel.add(Link.of(UriTemplate.of(pedidosUrl, pageVariables), "pedidos"));
+         pedidoModel.add(algaLinks.linkToPedidos());
          
          //pedidoModel.add(linkTo(PedidoController.class).withRel("pedidos"));
          
