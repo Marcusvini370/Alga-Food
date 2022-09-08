@@ -2,8 +2,28 @@ package com.algafood.api.openapi.model;
 
 import com.algafood.api.dto.CozinhaDTO;
 import io.swagger.annotations.ApiModel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.hateoas.Links;
+
+import java.util.List;
 
 @ApiModel("CozinhasModel")
-public class CozinhasModelOpenApi extends PagedModelOpenApi<CozinhaDTO> {
+@Setter
+@Getter
+public class CozinhasModelOpenApi  {
+
+    private CozinhasEmbeddedModelOpenApi _embedded;
+    private Links _links;
+    private PageableModelOpenApi page;
+
+    @ApiModel("CozinhasEmbeddedModel")
+    @Data
+    public class CozinhasEmbeddedModelOpenApi {
+
+        private List<CozinhaDTO> cozinhas;
+
+    }
 
 }

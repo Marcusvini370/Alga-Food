@@ -2,6 +2,7 @@ package com.algafood.core.openapi;
 
 import com.algafood.api.dto.CidadeDTO;
 import com.algafood.api.dto.CozinhaDTO;
+import com.algafood.api.dto.EstadoDTO;
 import com.algafood.api.dto.PedidoResumoDTO;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.openapi.model.*;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Links;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -70,13 +72,16 @@ public class SpringFoxConfig {
                 .directModelSubstitute(Pageable.class, PageableModelOpenApi.class) // organiza a doc de paginação p subst
                 .directModelSubstitute(Links.class, LinksModelOpenApi.class) //organizar links configurados do hateoas
                 .alternateTypeRules(AlternateTypeRules.newRule(
-                        typeResolver.resolve(Page.class, CozinhaDTO.class), CozinhasModelOpenApi.class))
+                        typeResolver.resolve(PagedModel.class, CozinhaDTO.class), CozinhasModelOpenApi.class))
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(Page.class, PedidoResumoDTO.class),
                         PedidosResumoModelOpenApi.class))
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(CollectionModel.class, CidadeDTO.class),
                         CidadesModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, EstadoDTO.class),
+                        EstadosModelOpenApi.class))
                 .apiInfo(apiInfo()) //traz as configurações do método para a documentação
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
