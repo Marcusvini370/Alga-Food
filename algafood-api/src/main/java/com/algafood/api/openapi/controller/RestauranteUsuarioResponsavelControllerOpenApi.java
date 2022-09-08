@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.ResponseEntity;
 
 @Api(tags = "Restaurantes")
 public interface RestauranteUsuarioResponsavelControllerOpenApi {
@@ -29,7 +30,7 @@ public interface RestauranteUsuarioResponsavelControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Restaurante ou usuário não encontrado",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class)))
     })
-    void desassociar(
+    ResponseEntity<Void> desassociar(
             @ApiParam(value = "ID do restaurante", example = "1", required = true)
             Long restauranteId,
 
@@ -42,7 +43,7 @@ public interface RestauranteUsuarioResponsavelControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Restaurante ou usuário não encontrado",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class)))
     })
-    void associar(
+    ResponseEntity<Void> associar(
             @ApiParam(value = "ID do restaurante", example = "1", required = true)
             Long restauranteId,
 
