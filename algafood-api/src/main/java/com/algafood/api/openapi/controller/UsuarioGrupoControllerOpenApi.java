@@ -9,8 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 @Api(tags = "Usuários")
 public interface UsuarioGrupoControllerOpenApi {
@@ -20,7 +19,7 @@ public interface UsuarioGrupoControllerOpenApi {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class)))
     })
-    List<GrupoDTO> listar(
+    CollectionModel<GrupoDTO> listar(
             @ApiParam(value = "ID do usuário", example = "1", required = true)
             Long usuarioId);
 
