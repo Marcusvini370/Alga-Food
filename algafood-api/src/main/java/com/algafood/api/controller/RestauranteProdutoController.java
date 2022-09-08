@@ -1,5 +1,6 @@
 package com.algafood.api.controller;
 
+import com.algafood.api.AlgaLinks;
 import com.algafood.api.assembler.ProdutoInputDisassembler;
 import com.algafood.api.assembler.ProdutoModelAssembler;
 import com.algafood.api.dto.ProdutoDTO;
@@ -11,6 +12,7 @@ import com.algafood.domain.repository.ProdutoRepository;
 import com.algafood.domain.service.CadastroProdutoService;
 import com.algafood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,9 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     private CadastroProdutoService cadastroProduto;
 
     @Autowired
+    private AlgaLinks algaLinks;
+
+    @Autowired
     private CadastroRestauranteService cadastroRestaurante;
 
     @Autowired
@@ -39,8 +44,8 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     private ProdutoInputDisassembler produtoInputDisassembler;
 
     @GetMapping
-    public List<ProdutoDTO> listar(@PathVariable Long restauranteId,
-                                   @RequestParam(required = false) boolean incluirInativos) {
+    public CollectionModel<ProdutoDTO> listar(@PathVariable Long restauranteId,
+                                              @RequestParam(required = false, defaultValue = "false") boolean incluirInativos) {
         Restaurante restaurante = cadastroRestaurante.BuscarOuFalhar(restauranteId);
 
         List<Produto> todosProdutos = null;
@@ -52,7 +57,8 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
         }
 
 
-        return produtoModelAssembler.toCollectionModel(todosProdutos);
+        return produtoModelAssembler.toCollectionModel(todosProdutos)
+                .add(algaLinks.linkToProdutos(restauranteId));
     }
 
     @GetMapping("/{produtoId}")

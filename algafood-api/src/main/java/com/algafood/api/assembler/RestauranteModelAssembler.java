@@ -23,23 +23,12 @@ public class RestauranteModelAssembler  extends RepresentationModelAssemblerSupp
         super(RestauranteController.class, RestauranteDTO.class);
     }
 
+    @Override
     public RestauranteDTO toModel(Restaurante restaurante) {
         RestauranteDTO restauranteModel = createModelWithId(restaurante.getId(), restaurante);
         modelMapper.map(restaurante, restauranteModel);
 
         restauranteModel.add(algaLinks.linkToRestaurantes("restaurantes"));
-
-        restauranteModel.getCozinha().add(
-                algaLinks.linkToCozinha(restaurante.getCozinha().getId()));
-
-        restauranteModel.getEndereco().getCidade().add(
-                algaLinks.linkToCidade(restaurante.getEndereco().getCidade().getId()));
-
-        restauranteModel.add(algaLinks.linkToRestauranteFormasPagamento(restaurante.getId(),
-                "formas-pagamento"));
-
-        restauranteModel.add(algaLinks.linkToResponsaveisRestaurante(restaurante.getId(),
-                "responsaveis"));
 
         if (restaurante.ativacaoPermitida()) {
             restauranteModel.add(
@@ -60,6 +49,23 @@ public class RestauranteModelAssembler  extends RepresentationModelAssemblerSupp
             restauranteModel.add(
                     algaLinks.linkToRestauranteFechamento(restaurante.getId(), "fechar"));
         }
+
+        restauranteModel.add(algaLinks.linkToProdutos(restaurante.getId(), "produtos"));
+
+        restauranteModel.getCozinha().add(
+                algaLinks.linkToCozinha(restaurante.getCozinha().getId()));
+
+        if (restauranteModel.getEndereco() != null
+                && restauranteModel.getEndereco().getCidade() != null) {
+            restauranteModel.getEndereco().getCidade().add(
+                    algaLinks.linkToCidade(restaurante.getEndereco().getCidade().getId()));
+        }
+
+        restauranteModel.add(algaLinks.linkToRestauranteFormasPagamento(restaurante.getId(),
+                "formas-pagamento"));
+
+        restauranteModel.add(algaLinks.linkToResponsaveisRestaurante(restaurante.getId(),
+                "responsaveis"));
 
         return restauranteModel;
     }
