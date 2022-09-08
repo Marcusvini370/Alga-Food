@@ -28,4 +28,8 @@ public enum StatusPedido {
         //se o novo status que eu tiver passando n tiver na minha lista ele retorna true q n pode
     }
 
+    public boolean podeAlterarPara(StatusPedido novoStatus) {
+        return !naoPodeAlterarPara(novoStatus);
+    }
+
 }
