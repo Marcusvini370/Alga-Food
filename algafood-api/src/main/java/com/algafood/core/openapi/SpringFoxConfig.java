@@ -1,9 +1,6 @@
 package com.algafood.core.openapi;
 
-import com.algafood.api.dto.CidadeDTO;
-import com.algafood.api.dto.CozinhaDTO;
-import com.algafood.api.dto.EstadoDTO;
-import com.algafood.api.dto.PedidoResumoDTO;
+import com.algafood.api.dto.*;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.openapi.model.*;
 import com.fasterxml.classmate.TypeResolver;
@@ -82,6 +79,9 @@ public class SpringFoxConfig {
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(CollectionModel.class, EstadoDTO.class),
                         EstadosModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, FormaPagamentoDTO.class),
+                        FormasPagamentoModelOpenApi.class))
                 .apiInfo(apiInfo()) //traz as configurações do método para a documentação
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
