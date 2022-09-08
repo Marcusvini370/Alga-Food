@@ -4,6 +4,7 @@ import com.algafood.domain.filter.VendaDiariaFilter;
 import com.algafood.domain.model.dto.VendaDiaria;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
+import com.algafood.api.controller.EstatisticasController.EstatisticasModel;
 
 import java.util.List;
 
@@ -40,4 +41,7 @@ public interface EstatisticasControllerOpenApi {
             @ApiParam(value = "Deslocamento de horário a ser considerado na consulta em relação ao UTC",
                     defaultValue = "+00:00")
             String timeOffset);
+
+    @ApiOperation(value = "Estatísticas", hidden = true)
+    EstatisticasModel estatisticas();
 }
