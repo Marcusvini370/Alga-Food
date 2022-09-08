@@ -1,12 +1,10 @@
 package com.algafood.core.openapi;
 
+import com.algafood.api.dto.CidadeDTO;
 import com.algafood.api.dto.CozinhaDTO;
 import com.algafood.api.dto.PedidoResumoDTO;
 import com.algafood.api.exceptionhandler.Problem;
-import com.algafood.api.openapi.model.CozinhasModelOpenApi;
-import com.algafood.api.openapi.model.LinksModelOpenApi;
-import com.algafood.api.openapi.model.PageableModelOpenApi;
-import com.algafood.api.openapi.model.PedidosResumoModelOpenApi;
+import com.algafood.api.openapi.model.*;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Links;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -75,6 +74,9 @@ public class SpringFoxConfig {
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(Page.class, PedidoResumoDTO.class),
                         PedidosResumoModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, CidadeDTO.class),
+                        CidadesModelOpenApi.class))
                 .apiInfo(apiInfo()) //traz as configurações do método para a documentação
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
