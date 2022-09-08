@@ -3,6 +3,7 @@ package com.algafood.api;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.algafood.api.controller.*;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.TemplateVariable;
@@ -10,17 +11,6 @@ import org.springframework.hateoas.TemplateVariable.VariableType;
 import org.springframework.hateoas.TemplateVariables;
 import org.springframework.hateoas.UriTemplate;
 import org.springframework.stereotype.Component;
-
-import com.algafood.api.controller.CidadeController;
-import com.algafood.api.controller.CozinhaController;
-import com.algafood.api.controller.EstadoController;
-import com.algafood.api.controller.FormaPagamentoController;
-import com.algafood.api.controller.PedidoController;
-import com.algafood.api.controller.RestauranteController;
-import com.algafood.api.controller.RestauranteProdutoController;
-import com.algafood.api.controller.RestauranteUsuarioResponsavelController;
-import com.algafood.api.controller.UsuarioController;
-import com.algafood.api.controller.UsuarioGrupoController;
 
 @Component
 public class AlgaLinks {
@@ -41,6 +31,21 @@ public class AlgaLinks {
 
         return Link.of(UriTemplate.of(pedidosUrl,
                 PAGINACAO_VARIABLES.concat(filtroVariables)), "pedidos");
+    }
+
+    public Link linkToConfirmacaoPedido(String codigoPedido, String rel) {
+        return linkTo(methodOn(FluxoPedidoController.class).
+                confirmar(codigoPedido)).withRel(rel);
+    }
+
+    public Link linkToEntregaPedido(String codigoPedido, String rel) {
+        return linkTo(methodOn(FluxoPedidoController.class).
+                entregar(codigoPedido)).withRel(rel);
+    }
+
+    public Link linkToCancelamentoPedido(String codigoPedido, String rel) {
+        return linkTo(methodOn(FluxoPedidoController.class).
+                cancelar(codigoPedido)).withRel(rel);
     }
 
     public Link linkToRestaurante(Long restauranteId, String rel) {
