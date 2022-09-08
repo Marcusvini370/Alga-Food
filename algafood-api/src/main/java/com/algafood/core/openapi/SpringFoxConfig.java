@@ -88,6 +88,9 @@ public class SpringFoxConfig {
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(PagedModel.class, PedidoResumoDTO.class),
                         PedidosResumoModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, ProdutoDTO.class),
+                        ProdutosModelOpenApi.class))
                 .apiInfo(apiInfo()) //traz as configurações do método para a documentação
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
