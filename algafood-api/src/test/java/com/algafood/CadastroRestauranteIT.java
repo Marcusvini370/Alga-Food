@@ -1,9 +1,13 @@
 package com.algafood;
 
-import static io.restassured.RestAssured.given;
-
-import java.math.BigDecimal;
-
+import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.model.Restaurante;
+import com.algafood.domain.repository.CozinhaRepository;
+import com.algafood.domain.repository.RestauranteRepository;
+import com.algafood.util.DatabaseCleaner;
+import com.algafood.util.ResourceUtils;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +16,10 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 
+import java.math.BigDecimal;
+
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
-
-import com.algafood.domain.model.Cozinha;
-import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.repository.CozinhaRepository;
-import com.algafood.domain.repository.RestauranteRepository;
-import com.algafood.util.DatabaseCleaner;
-import com.algafood.util.ResourceUtils;
-
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("/application-test.properties")

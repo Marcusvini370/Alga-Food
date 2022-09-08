@@ -1,19 +1,13 @@
 package com.algafood.domain.service;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import com.algafood.domain.exception.RestauranteNaoEncontradoExcpetion;
+import com.algafood.domain.model.*;
+import com.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.algafood.domain.exception.RestauranteNaoEncontradoExcpetion;
-import com.algafood.domain.model.Cidade;
-import com.algafood.domain.model.Cozinha;
-import com.algafood.domain.model.FormaPagamento;
-import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.model.Usuario;
-import com.algafood.domain.repository.RestauranteRepository;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CadastroRestauranteService {

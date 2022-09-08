@@ -1,12 +1,8 @@
 package com.algafood.api.openapi.controller;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedModel;
-
 import com.algafood.api.dto.CozinhaDTO;
 import com.algafood.api.dto.input.CozinhaInput;
 import com.algafood.api.exceptionhandler.Problem;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 
 @Api(tags = "Cozinhas")
 public interface CozinhaControllerOpenApi {

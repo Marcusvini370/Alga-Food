@@ -1,7 +1,6 @@
 package com.algafood.api.openapi.controller;
 
 import com.algafood.api.exceptionhandler.Problem;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

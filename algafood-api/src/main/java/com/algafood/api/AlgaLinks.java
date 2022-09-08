@@ -1,16 +1,12 @@
 package com.algafood.api;
 
+import com.algafood.api.controller.*;
+import org.springframework.hateoas.*;
+import org.springframework.hateoas.TemplateVariable.VariableType;
+import org.springframework.stereotype.Component;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-import com.algafood.api.controller.*;
-import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.TemplateVariable;
-import org.springframework.hateoas.TemplateVariable.VariableType;
-import org.springframework.hateoas.TemplateVariables;
-import org.springframework.hateoas.UriTemplate;
-import org.springframework.stereotype.Component;
 
 @Component
 public class AlgaLinks {
@@ -51,6 +47,28 @@ public class AlgaLinks {
     public Link linkToRestaurante(Long restauranteId, String rel) {
         return linkTo(methodOn(RestauranteController.class)
                 .buscar(restauranteId)).withRel(rel);
+    }
+
+    public Link linkToRestaurantes(String rel) {
+        return linkTo(RestauranteController.class).withRel(rel);
+    }
+
+    public Link linkToRestaurantes() {
+        return linkToRestaurantes(IanaLinkRelations.SELF.value());
+    }
+
+    public Link linkToRestauranteFormasPagamento(Long restauranteId, String rel) {
+        return linkTo(methodOn(RestauranteFormaPagamentoController.class)
+                .listar(restauranteId)).withRel(rel);
+    }
+
+    public Link linkToCozinha(Long cozinhaId, String rel) {
+        return linkTo(methodOn(CozinhaController.class)
+                .buscar(cozinhaId)).withRel(rel);
+    }
+
+    public Link linkToCozinha(Long cozinhaId) {
+        return linkToCozinha(cozinhaId, IanaLinkRelations.SELF.value());
     }
 
     public Link linkToRestaurante(Long restauranteId) {

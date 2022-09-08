@@ -1,13 +1,12 @@
 package com.algafood.domain.service;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.algafood.domain.exception.ProdutoNaoEncontradoException;
 import com.algafood.domain.model.Produto;
 import com.algafood.domain.repository.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 public class CadastroProdutoService {

@@ -1,13 +1,11 @@
 package com.algafood.infracstruture.repository.spec;
 
-import java.util.ArrayList;
-
-import javax.persistence.criteria.Predicate;
-
-import org.springframework.data.jpa.domain.Specification;
-
 import com.algafood.domain.filter.PedidoFilter;
 import com.algafood.domain.model.Pedido;
+import org.springframework.data.jpa.domain.Specification;
+
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 
 public class PedidoSpecs {
 

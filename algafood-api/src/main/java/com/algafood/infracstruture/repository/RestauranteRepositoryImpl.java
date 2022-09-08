@@ -1,25 +1,23 @@
 package com.algafood.infracstruture.repository;
 
-import static com.algafood.infracstruture.repository.spec.RestauranteSpecs.comFreteGratis;
-import static com.algafood.infracstruture.repository.spec.RestauranteSpecs.comNomeSemelhante;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
-
+import com.algafood.domain.model.Restaurante;
+import com.algafood.domain.repository.RestauranteReposiotryQueries;
+import com.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.repository.RestauranteReposiotryQueries;
-import com.algafood.domain.repository.RestauranteRepository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.algafood.infracstruture.repository.spec.RestauranteSpecs.comFreteGratis;
+import static com.algafood.infracstruture.repository.spec.RestauranteSpecs.comNomeSemelhante;
 
 @Repository
 public class RestauranteRepositoryImpl implements RestauranteReposiotryQueries {

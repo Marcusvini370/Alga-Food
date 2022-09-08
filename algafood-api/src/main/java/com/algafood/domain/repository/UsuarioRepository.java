@@ -1,10 +1,9 @@
 package com.algafood.domain.repository;
 
-import java.util.Optional;
-
+import com.algafood.domain.model.Usuario;
 import org.springframework.stereotype.Repository;
 
-import com.algafood.domain.model.Usuario;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends CustomJpaRepository<Usuario, Long> {

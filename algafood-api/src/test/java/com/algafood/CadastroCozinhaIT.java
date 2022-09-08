@@ -1,20 +1,18 @@
 package com.algafood;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import javax.validation.ConstraintViolationException;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
-
 import com.algafood.domain.exception.CozinhaNaoEncontradaExcpetion;
 import com.algafood.domain.exception.EntidadeEmusoExcpetion;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.service.CadastroCozinhaService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import javax.validation.ConstraintViolationException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest //funcionalidades do springboot nos testes
 class CadastroCozinhaIT {

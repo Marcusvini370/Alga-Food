@@ -1,11 +1,8 @@
 package com.algafood.api.openapi.controller;
 
-import org.springframework.hateoas.CollectionModel;
-
 import com.algafood.api.dto.CidadeDTO;
 import com.algafood.api.dto.input.CidadeInput;
 import com.algafood.api.exceptionhandler.Problem;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.hateoas.CollectionModel;
 
 @Api(tags = "Cidades")
 public interface CidadeControllerOpenApi {

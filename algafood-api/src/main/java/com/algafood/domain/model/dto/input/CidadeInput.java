@@ -1,14 +1,12 @@
 package com.algafood.domain.model.dto.input;
 
+import com.algafood.domain.model.dto.EstadoDTO;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-
-import com.algafood.domain.model.dto.EstadoDTO;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Setter
 @Getter

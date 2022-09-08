@@ -1,13 +1,12 @@
 package com.algafood.core.email;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.algafood.domain.service.EnvioEmailService;
 import com.algafood.infracstruture.service.email.FakeEnvioEmailService;
 import com.algafood.infracstruture.service.email.SandboxEnvioEmailService;
 import com.algafood.infracstruture.service.email.SmtpEnvioEmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EmailConfig {

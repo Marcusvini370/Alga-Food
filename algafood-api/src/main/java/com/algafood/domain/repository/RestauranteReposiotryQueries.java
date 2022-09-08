@@ -1,9 +1,9 @@
 package com.algafood.domain.repository;
 
+import com.algafood.domain.model.Restaurante;
+
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.algafood.domain.model.Restaurante;
 
 public interface RestauranteReposiotryQueries {
 

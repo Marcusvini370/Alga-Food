@@ -1,12 +1,11 @@
 package com.algafood.api.assembler;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.algafood.api.dto.input.CidadeInput;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Estado;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CidadeInputDisassembler {

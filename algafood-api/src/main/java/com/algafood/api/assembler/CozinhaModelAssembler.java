@@ -1,14 +1,13 @@
 package com.algafood.api.assembler;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
-import org.springframework.stereotype.Component;
-
 import com.algafood.api.AlgaLinks;
 import com.algafood.api.controller.CozinhaController;
 import com.algafood.api.dto.CozinhaDTO;
 import com.algafood.domain.model.Cozinha;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CozinhaModelAssembler extends RepresentationModelAssemblerSupport<Cozinha, CozinhaDTO> {

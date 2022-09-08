@@ -1,13 +1,13 @@
 package com.algafood.core.openapi;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLStreamHandler;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Consumer;
-
+import com.algafood.api.dto.CozinhaDTO;
+import com.algafood.api.dto.PedidoResumoDTO;
+import com.algafood.api.exceptionhandler.Problem;
+import com.algafood.api.openapi.model.CozinhasModelOpenApi;
+import com.algafood.api.openapi.model.PageableModelOpenApi;
+import com.algafood.api.openapi.model.PedidosResumoModelOpenApi;
+import com.fasterxml.classmate.TypeResolver;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -17,21 +17,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.ServletWebRequest;
-
-import com.algafood.api.dto.CozinhaDTO;
-import com.algafood.api.dto.PedidoResumoDTO;
-import com.algafood.api.exceptionhandler.Problem;
-import com.algafood.api.openapi.model.CozinhasModelOpenApi;
-import com.algafood.api.openapi.model.PageableModelOpenApi;
-import com.algafood.api.openapi.model.PedidosResumoModelOpenApi;
-import com.fasterxml.classmate.TypeResolver;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RepresentationBuilder;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseBuilder;
+import springfox.documentation.builders.*;
 import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -40,6 +26,14 @@ import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.json.JacksonModuleRegistrar;
 import springfox.documentation.spring.web.plugins.Docket;
+
+import java.io.File;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLStreamHandler;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
 
 @Configuration
 public class SpringFoxConfig {

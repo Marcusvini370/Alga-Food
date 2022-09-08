@@ -1,17 +1,14 @@
 package com.algafood.api.assembler;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-
+import com.algafood.api.AlgaLinks;
+import com.algafood.api.controller.UsuarioController;
+import com.algafood.api.dto.UsuarioDTO;
+import com.algafood.domain.model.Usuario;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-
-import com.algafood.api.AlgaLinks;
-import com.algafood.api.controller.UsuarioController;
-import com.algafood.api.dto.UsuarioDTO;
-import com.algafood.domain.model.Usuario;
 
 @Component
 public class UsuarioModelAssembler extends RepresentationModelAssemblerSupport<Usuario, UsuarioDTO> {
@@ -40,6 +37,6 @@ public class UsuarioModelAssembler extends RepresentationModelAssemblerSupport<U
     @Override
     public CollectionModel<UsuarioDTO> toCollectionModel(Iterable<? extends Usuario> entities) {
         return super.toCollectionModel(entities)
-                .add(linkTo(UsuarioController.class).withSelfRel());
+                .add(algaLinks.linkToUsuarios());
     }
 }      

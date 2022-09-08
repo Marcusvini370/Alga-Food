@@ -1,17 +1,15 @@
 package com.algafood.domain.service;
 
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.exception.UsuarioNaoEncontradoException;
 import com.algafood.domain.model.Grupo;
 import com.algafood.domain.model.Usuario;
 import com.algafood.domain.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class CadastroUsuarioService {

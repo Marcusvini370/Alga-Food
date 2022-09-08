@@ -1,11 +1,11 @@
 package com.algafood.api.openapi.model;
 
-import java.util.List;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @ApiModel("Pageable")
 @Setter

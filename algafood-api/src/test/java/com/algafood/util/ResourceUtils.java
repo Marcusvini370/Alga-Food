@@ -1,10 +1,10 @@
 package com.algafood.util;
 
+import org.springframework.util.StreamUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-
-import org.springframework.util.StreamUtils;
 
 public class ResourceUtils {
 

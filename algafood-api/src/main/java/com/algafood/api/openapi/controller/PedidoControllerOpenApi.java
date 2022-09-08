@@ -1,23 +1,17 @@
 package com.algafood.api.openapi.controller;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedModel;
-
 import com.algafood.api.dto.PedidoDTO;
 import com.algafood.api.dto.PedidoResumoDTO;
 import com.algafood.api.dto.input.PedidoInput;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.domain.filter.PedidoFilter;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 
 @Api(tags = "Pedidos")
 public interface PedidoControllerOpenApi {

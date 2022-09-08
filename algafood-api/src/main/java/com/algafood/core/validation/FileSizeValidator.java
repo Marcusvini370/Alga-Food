@@ -1,10 +1,10 @@
 package com.algafood.core.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 public class FileSizeValidator implements ConstraintValidator<FileSize, MultipartFile> {
 

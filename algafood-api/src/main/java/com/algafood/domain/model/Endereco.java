@@ -1,12 +1,8 @@
 package com.algafood.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import lombok.Data;
+
+import javax.persistence.*;
 
 @Data
 @Embeddable // É uma classe imbutida, parte de uma outra entidade

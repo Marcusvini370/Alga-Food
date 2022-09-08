@@ -1,11 +1,10 @@
 package com.algafood.api.assembler;
 
+import com.algafood.api.dto.input.FormaPagamentoInput;
+import com.algafood.domain.model.FormaPagamento;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.algafood.api.dto.input.FormaPagamentoInput;
-import com.algafood.domain.model.FormaPagamento;
 
 @Component
 public class FormaPagamentoInputDisassembler {

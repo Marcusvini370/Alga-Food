@@ -1,10 +1,5 @@
 package com.algafood.infracstruture.service.storage;
 
-import java.net.URL;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-
 import com.algafood.core.storage.StorageProperties;
 import com.algafood.domain.service.FotoStorageService;
 import com.amazonaws.services.s3.AmazonS3;
@@ -12,6 +7,10 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+
+import java.net.URL;
 
 
 @ConditionalOnProperty(name = "algafood.storage.tipo", havingValue = "s3")

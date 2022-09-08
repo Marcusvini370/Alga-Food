@@ -1,17 +1,16 @@
 package com.algafood.domain.service;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-
 import com.algafood.domain.exception.EntidadeEmusoExcpetion;
 import com.algafood.domain.exception.GrupoNaoEncontradoException;
 import com.algafood.domain.model.Grupo;
 import com.algafood.domain.model.Permissao;
 import com.algafood.domain.repository.GrupoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 public class CadastroGrupoService {

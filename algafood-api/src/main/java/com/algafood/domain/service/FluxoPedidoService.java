@@ -1,12 +1,11 @@
 package com.algafood.domain.service;
 
-import javax.transaction.Transactional;
-
+import com.algafood.domain.model.Pedido;
+import com.algafood.domain.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.algafood.domain.model.Pedido;
-import com.algafood.domain.repository.PedidoRepository;
+import javax.transaction.Transactional;
 
 @Service
 public class FluxoPedidoService {

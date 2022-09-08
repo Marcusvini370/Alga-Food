@@ -1,22 +1,13 @@
 package com.algafood.api.assembler;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import com.algafood.api.AlgaLinks;
+import com.algafood.api.controller.PedidoController;
+import com.algafood.api.dto.PedidoDTO;
+import com.algafood.domain.model.Pedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-
-import com.algafood.api.AlgaLinks;
-import com.algafood.api.controller.CidadeController;
-import com.algafood.api.controller.FormaPagamentoController;
-import com.algafood.api.controller.PedidoController;
-import com.algafood.api.controller.RestauranteController;
-import com.algafood.api.controller.RestauranteProdutoController;
-import com.algafood.api.controller.UsuarioController;
-import com.algafood.api.dto.PedidoDTO;
-import com.algafood.domain.model.Pedido;
 
 @Component
 public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pedido, PedidoDTO> {

@@ -1,16 +1,15 @@
 package com.algafood.domain.service;
 
-import java.io.InputStream;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.algafood.domain.exception.FotoProdutoNaoEncontradaException;
 import com.algafood.domain.model.FotoProduto;
 import com.algafood.domain.repository.ProdutoRepository;
 import com.algafood.domain.service.FotoStorageService.NovaFoto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.InputStream;
+import java.util.Optional;
 
 @Service
 public class CatalogoFotoProdutoService {

@@ -1,14 +1,12 @@
 package com.algafood.core.storage;
 
-import java.nio.file.Path;
-
+import com.amazonaws.regions.Regions;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import com.amazonaws.regions.Regions;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.nio.file.Path;
 
 @Getter
 @Setter

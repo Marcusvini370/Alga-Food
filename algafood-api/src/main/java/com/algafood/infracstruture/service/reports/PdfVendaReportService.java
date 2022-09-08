@@ -1,18 +1,16 @@
 package com.algafood.infracstruture.service.reports;
 
-import java.util.HashMap;
-import java.util.Locale;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.algafood.domain.filter.VendaDiariaFilter;
 import com.algafood.domain.service.VendaQueryService;
 import com.algafood.domain.service.VendaReportService;
-
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 @Service
 public class PdfVendaReportService implements VendaReportService {

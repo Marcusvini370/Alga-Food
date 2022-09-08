@@ -1,15 +1,8 @@
 package com.algafood.api.openapi.controller;
 
-import java.io.IOException;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.algafood.api.dto.FotoProdutoDTO;
 import com.algafood.api.dto.input.FotoProdutoInput;
 import com.algafood.api.exceptionhandler.Problem;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,6 +10,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Api(tags = "Produtos")
 public interface RestauranteProdutoFotoControllerOpenApi {

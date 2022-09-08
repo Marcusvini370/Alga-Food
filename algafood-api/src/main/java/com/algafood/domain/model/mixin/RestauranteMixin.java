@@ -1,15 +1,15 @@
 package com.algafood.domain.model.mixin;
 
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Endereco;
 import com.algafood.domain.model.FormaPagamento;
 import com.algafood.domain.model.Produto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class RestauranteMixin {
 

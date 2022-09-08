@@ -1,8 +1,11 @@
 package com.algafood;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.equalTo;
-
+import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.repository.CozinhaRepository;
+import com.algafood.util.DatabaseCleaner;
+import com.algafood.util.ResourceUtils;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,13 +15,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 
-import com.algafood.domain.model.Cozinha;
-import com.algafood.domain.repository.CozinhaRepository;
-import com.algafood.util.DatabaseCleaner;
-import com.algafood.util.ResourceUtils;
-
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("/application-test.properties")

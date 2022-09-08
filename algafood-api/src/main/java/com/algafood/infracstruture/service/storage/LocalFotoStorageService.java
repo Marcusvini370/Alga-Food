@@ -1,14 +1,13 @@
 package com.algafood.infracstruture.service.storage;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
+import com.algafood.core.storage.StorageProperties;
+import com.algafood.domain.service.FotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
 
-import com.algafood.core.storage.StorageProperties;
-import com.algafood.domain.service.FotoStorageService;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class LocalFotoStorageService implements FotoStorageService {
 

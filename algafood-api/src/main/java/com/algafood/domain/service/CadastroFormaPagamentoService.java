@@ -1,16 +1,15 @@
 package com.algafood.domain.service;
 
-import javax.transaction.Transactional;
-
+import com.algafood.domain.exception.EntidadeEmusoExcpetion;
+import com.algafood.domain.exception.FormaPagamentoNaoEncontradaException;
+import com.algafood.domain.model.FormaPagamento;
+import com.algafood.domain.repository.FormaPagamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.algafood.domain.exception.EntidadeEmusoExcpetion;
-import com.algafood.domain.exception.FormaPagamentoNaoEncontradaException;
-import com.algafood.domain.model.FormaPagamento;
-import com.algafood.domain.repository.FormaPagamentoRepository;
+import javax.transaction.Transactional;
 
 @Service
 public class CadastroFormaPagamentoService {

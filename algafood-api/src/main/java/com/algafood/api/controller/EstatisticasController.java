@@ -1,7 +1,10 @@
 package com.algafood.api.controller;
 
-import java.util.List;
-
+import com.algafood.api.openapi.controller.EstatisticasControllerOpenApi;
+import com.algafood.domain.filter.VendaDiariaFilter;
+import com.algafood.domain.model.dto.VendaDiaria;
+import com.algafood.domain.service.VendaQueryService;
+import com.algafood.domain.service.VendaReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,12 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algafood.api.dto.input.CozinhaInput;
-import com.algafood.api.openapi.controller.EstatisticasControllerOpenApi;
-import com.algafood.domain.filter.VendaDiariaFilter;
-import com.algafood.domain.model.dto.VendaDiaria;
-import com.algafood.domain.service.VendaQueryService;
-import com.algafood.domain.service.VendaReportService;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/estatisticas")

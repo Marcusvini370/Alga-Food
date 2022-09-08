@@ -1,12 +1,12 @@
 package com.algafood.domain.service;
 
-import java.util.Map;
-import java.util.Set;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Singular;
+
+import java.util.Map;
+import java.util.Set;
 
 public interface EnvioEmailService {
 

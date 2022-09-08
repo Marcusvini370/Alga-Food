@@ -1,4 +1,4 @@
-package com.algafood.api.dto;
+package com.algafood.domain.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -6,18 +6,15 @@ import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-@Relation(collectionRelation = "usuarios")
+@Relation(collectionRelation = "restaurantes")
 @Setter
 @Getter
-public class UsuarioDTO extends RepresentationModel<UsuarioDTO> {
+public class RestauranteApenasNomeDTO extends RepresentationModel<RestauranteApenasNomeDTO> {
 
     @ApiModelProperty(example = "1")
     private Long id;
-
-    @ApiModelProperty(example = "João da Silva")
+    
+    @ApiModelProperty(example = "Thai Gourmet")
     private String nome;
-
-    @ApiModelProperty(example = "joao.ger@algafood.com.br")
-    private String email;
-
-}
+    
+}  

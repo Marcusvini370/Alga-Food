@@ -1,20 +1,18 @@
 package com.algafood.infracstruture.service.query;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.Predicate;
-
-import org.springframework.stereotype.Repository;
-
 import com.algafood.domain.filter.VendaDiariaFilter;
 import com.algafood.domain.model.Pedido;
 import com.algafood.domain.model.StatusPedido;
 import com.algafood.domain.model.dto.VendaDiaria;
 import com.algafood.domain.service.VendaQueryService;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Repository
 public class VendaQueryServiceImpl implements VendaQueryService {

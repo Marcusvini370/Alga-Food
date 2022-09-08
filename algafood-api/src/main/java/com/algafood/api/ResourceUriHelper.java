@@ -1,16 +1,13 @@
 package com.algafood.api;
 
-import java.net.URI;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.net.HttpHeaders;
+import lombok.experimental.UtilityClass;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.google.common.net.HttpHeaders;
-
-import lombok.experimental.UtilityClass;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
 
 @UtilityClass //classe que não pode ser extendida, tbm n pode gerar construtor
 public class ResourceUriHelper {

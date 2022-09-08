@@ -1,13 +1,12 @@
 package com.algafood.core.modelmapper;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.algafood.api.dto.EnderecoDTO;
 import com.algafood.api.dto.input.ItemPedidoInput;
 import com.algafood.domain.model.Endereco;
 import com.algafood.domain.model.ItemPedido;
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
