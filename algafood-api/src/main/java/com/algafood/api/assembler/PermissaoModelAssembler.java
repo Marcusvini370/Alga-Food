@@ -1,28 +1,30 @@
 package com.algafood.api.assembler;
 
+import com.algafood.api.AlgaLinks;
 import com.algafood.api.dto.PermissaoDTO;
 import com.algafood.domain.model.Permissao;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
-public class PermissaoModelAssembler {
+public class PermissaoModelAssembler implements RepresentationModelAssembler<Permissao, PermissaoDTO> {
 
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private AlgaLinks algaLinks;
+
     public PermissaoDTO toModel(Permissao permissao) {
-        return modelMapper.map(permissao, PermissaoDTO.class);
+        PermissaoDTO permissaoModel = modelMapper.map(permissao, PermissaoDTO.class);
+        return permissaoModel;
     }
 
-    public List<PermissaoDTO> toCollectionModel(Collection<Permissao> permissoes) {
-        return permissoes.stream()
-                .map(permissao -> toModel(permissao))
-                .collect(Collectors.toList());
+    public CollectionModel<PermissaoDTO> toCollectionModel(Iterable<? extends Permissao> entities) {
+        return RepresentationModelAssembler.super.toCollectionModel(entities)
+                .add(algaLinks.linkToPermissoes());
     }
 }
