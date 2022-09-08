@@ -4,6 +4,7 @@ import com.algafood.api.dto.CozinhaDTO;
 import com.algafood.api.dto.PedidoResumoDTO;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.openapi.model.CozinhasModelOpenApi;
+import com.algafood.api.openapi.model.LinksModelOpenApi;
 import com.algafood.api.openapi.model.PageableModelOpenApi;
 import com.algafood.api.openapi.model.PedidosResumoModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Links;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -67,6 +69,7 @@ public class SpringFoxConfig {
                 .ignoredParameterTypes(ServletWebRequest.class, // ignora parametros, util pra tirar os n usados
                         URL.class, URI.class, URLStreamHandler.class, Resource.class, File.class)
                 .directModelSubstitute(Pageable.class, PageableModelOpenApi.class) // organiza a doc de paginação p subst
+                .directModelSubstitute(Links.class, LinksModelOpenApi.class) //organizar links configurados do hateoas
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(Page.class, CozinhaDTO.class), CozinhasModelOpenApi.class))
                 .alternateTypeRules(AlternateTypeRules.newRule(
