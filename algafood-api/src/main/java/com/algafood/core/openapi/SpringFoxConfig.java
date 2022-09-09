@@ -39,14 +39,15 @@ import java.util.function.Consumer;
 public class SpringFoxConfig {
 
     @Bean
-    public Docket apiDocket() {
+    public Docket apiDocketv1() {
 
         var typeResolver = new TypeResolver();
 
         return new Docket(DocumentationType.OAS_30) //configuração da documentação
+                .groupName("V1")
                 .select() //retornando builder para selecionar os endpoints para sempre expostos
                 .apis(RequestHandlerSelectors.basePackage("com.algafood.api")) // seleciona pasta dos controladores a documentar
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.ant("/v1/**"))
                 // .paths(PathSelectors.ant("/restaurantes/*")) controlador específico
                 .build() //retorna o docket;
                 .useDefaultResponseMessages(false) //desativa os código de erro gerado auto
@@ -97,7 +98,7 @@ public class SpringFoxConfig {
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(CollectionModel.class, UsuarioDTO.class),
                         UsuariosModelOpenApi.class))
-                .apiInfo(apiInfo()) //traz as configurações do método para a documentação
+                .apiInfo(apiInfoV1()) //traz as configurações do método para a documentação
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
                         new Tag("Cozinhas", "Gerencia as cozinhas"),
@@ -109,6 +110,32 @@ public class SpringFoxConfig {
                         new Tag("Usuários", "Gerencia os usuários"),
                         new Tag("Estatísticas", "Estatísticas da AlgaFood"),
                         new Tag("Permissões", "Gerencia as permissões"));
+    }
+
+    @Bean
+    public Docket apiDocketV2() {
+
+        var typeResolver = new TypeResolver();
+
+        return new Docket(DocumentationType.OAS_30) //configuração da documentação
+                .groupName("V2")
+                .select() //retornando builder para selecionar os endpoints para sempre expostos
+                .apis(RequestHandlerSelectors.basePackage("com.algafood.api")) // seleciona pasta dos controladores a documentar
+                .paths(PathSelectors.ant("/v2/**"))
+                // .paths(PathSelectors.ant("/restaurantes/*")) controlador específico
+                .build() //retorna o docket;
+                .useDefaultResponseMessages(false) //desativa os código de erro gerado auto
+                .globalResponses(HttpMethod.GET, globalGetResponseMessages()) //conf cod de status padrao pro mét get
+                .globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
+                .globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
+                .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
+                .additionalModels(typeResolver.resolve(Problem.class)) // modelo extra pra adicionar na doc.
+                .ignoredParameterTypes(ServletWebRequest.class, // ignora parametros, util pra tirar os n usados
+                        URL.class, URI.class, URLStreamHandler.class, Resource.class, File.class)
+                .directModelSubstitute(Pageable.class, PageableModelOpenApi.class) // organiza a doc de paginação p subst
+                .directModelSubstitute(Links.class, LinksModelOpenApi.class) //organizar links configurados do hateoas
+                .apiInfo(apiInfoV2()); //traz as configurações do método para a documentação
+
     }
 
     /* O método responseModel não existe na classe ResponseBuilder do SpringFox 3,
@@ -187,11 +214,20 @@ public class SpringFoxConfig {
     }
 
 
-    public ApiInfo apiInfo() {
+    private ApiInfo apiInfoV1() {
         return new ApiInfoBuilder()
                 .title("Algafood API")
                 .description("API aberta para clientes e restaurantes")
                 .version("1")
+                .contact(new Contact("Algaworks", "https://github.com/Marcusvini370/Alga-Food", "marcusvini370@gmail.com"))
+                .build();
+    }
+
+    private ApiInfo apiInfoV2() {
+        return new ApiInfoBuilder()
+                .title("Algafood API")
+                .description("API aberta para clientes e restaurantes")
+                .version("2")
                 .contact(new Contact("Algaworks", "https://github.com/Marcusvini370/Alga-Food", "marcusvini370@gmail.com"))
                 .build();
     }
