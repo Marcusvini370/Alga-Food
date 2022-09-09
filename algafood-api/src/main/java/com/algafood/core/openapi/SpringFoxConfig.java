@@ -1,9 +1,8 @@
 package com.algafood.core.openapi;
 
-import com.algafood.api.dto.*;
 import com.algafood.api.exceptionhandler.Problem;
-import com.algafood.api.openapi.model.*;
-import com.algafood.domain.model.dto.RestauranteBasicoDTO;
+import com.algafood.api.v1.model.*;
+import com.algafood.api.v1.openapi.model.*;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
