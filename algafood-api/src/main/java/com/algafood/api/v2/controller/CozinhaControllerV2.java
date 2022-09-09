@@ -4,6 +4,7 @@ import com.algafood.api.v2.assembler.CozinhaInputDisassemblerV2;
 import com.algafood.api.v2.assembler.CozinhaModelAssemblerV2;
 import com.algafood.api.v2.model.CozinhaModelV2;
 import com.algafood.api.v2.model.input.CozinhaInputV2;
+import com.algafood.api.v2.openapi.controller.CozinhaControllerV2OpenApi;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/v2/cozinhas", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CozinhaControllerV2 {
+public class CozinhaControllerV2 implements CozinhaControllerV2OpenApi {
 
     @Autowired
     private CozinhaRepository cozinhaRepository;
@@ -37,14 +38,15 @@ public class CozinhaControllerV2 {
     
     @Autowired
     private PagedResourcesAssembler<Cozinha> pagedResourcesAssembler;
-    
-    @GetMapping
+
+    @Override
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public PagedModel<CozinhaModelV2> listar(@PageableDefault(size = 10) Pageable pageable) {
         Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
-        
+
         PagedModel<CozinhaModelV2> cozinhasPagedModel = pagedResourcesAssembler
                 .toModel(cozinhasPage, cozinhaModelAssembler);
-        
+
         return cozinhasPagedModel;
     }
     

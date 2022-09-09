@@ -5,6 +5,7 @@ import com.algafood.api.v2.assembler.CidadeInputDisassemblerV2;
 import com.algafood.api.v2.assembler.CidadeModelAssemblerV2;
 import com.algafood.api.v2.model.CidadeModelV2;
 import com.algafood.api.v2.model.input.CidadeInputV2;
+import com.algafood.api.v2.openapi.controller.CidadeControllerV2OpenApi;
 import com.algafood.domain.exception.EstadoNaoEncontradoExcpetion;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cidade;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/v2/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CidadeControllerV2 {
+public class CidadeControllerV2 implements CidadeControllerV2OpenApi {
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
@@ -83,11 +84,11 @@ public class CidadeControllerV2 {
 		}
 	}
 	
-//  Não pode ser mapeado na mesma URL em um MediaType diferente, já que não aceita entrada e retorna void.
-//	@DeleteMapping(value = "/{cidadeId}", produces = {})
-//	@ResponseStatus(HttpStatus.NO_CONTENT)
-//	public void remover(@PathVariable Long cidadeId) {
-//		cadastroCidade.excluir(cidadeId);	
-//	}
+ // Não pode ser mapeado na mesma URL em um MediaType diferente, já que não aceita entrada e retorna void.
+	@DeleteMapping(value = "/{cidadeId}", produces = {})
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long cidadeId) {
+		cadastroCidade.excluir(cidadeId);
+	}
 	
 }
