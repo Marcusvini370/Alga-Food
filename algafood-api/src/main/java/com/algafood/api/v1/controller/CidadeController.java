@@ -6,7 +6,6 @@ import com.algafood.api.v1.assembler.CidadeModelAssembler;
 import com.algafood.api.v1.model.CidadeDTO;
 import com.algafood.api.v1.model.input.CidadeInput;
 import com.algafood.api.v1.openapi.controller.CidadeControllerOpenApi;
-import com.algafood.core.web.AlgaMediaTypes;
 import com.algafood.domain.exception.EstadoNaoEncontradoExcpetion;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cidade;
@@ -15,12 +14,13 @@ import com.algafood.domain.service.CadastroCidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "/cidades")
+@RequestMapping(path = "/v1/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CidadeController implements CidadeControllerOpenApi {
 
     @Autowired
@@ -36,19 +36,19 @@ public class CidadeController implements CidadeControllerOpenApi {
     private CidadeInputDisassembler cidadeInputDisassembler;
 
     @Override
-    @GetMapping(produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
+    @GetMapping
     public CollectionModel<CidadeDTO> listar() {
         return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
     }
 
     @Override
-    @GetMapping(path = "/{cidadeId}", produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
+    @GetMapping("/{cidadeId}")
     public CidadeDTO buscar(@PathVariable Long cidadeId) {
         return cidadeModelAssembler.toModel(cadastroCidade.BuscarOuFalhar(cidadeId));
     }
 
     @Override
-    @PostMapping(produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CidadeDTO adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
         try {
@@ -67,7 +67,7 @@ public class CidadeController implements CidadeControllerOpenApi {
     }
 
     @Override
-    @PutMapping(path = "/{cidadeId}", produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
+    @PutMapping("/{cidadeId}")
     public CidadeDTO atualizar(@PathVariable Long cidadeId, @RequestBody @Valid CidadeInput cidadeInput) {
 
         try {
