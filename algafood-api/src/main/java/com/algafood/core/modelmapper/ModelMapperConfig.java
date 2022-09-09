@@ -2,6 +2,8 @@ package com.algafood.core.modelmapper;
 
 import com.algafood.api.v1.model.EnderecoDTO;
 import com.algafood.api.v1.model.input.ItemPedidoInput;
+import com.algafood.api.v2.model.input.CidadeInputV2;
+import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Endereco;
 import com.algafood.domain.model.ItemPedido;
 import org.modelmapper.ModelMapper;
@@ -16,6 +18,9 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
 
         var modelMapper = new ModelMapper();
+
+        modelMapper.createTypeMap(CidadeInputV2.class, Cidade.class)
+                .addMappings(mapper -> mapper.skip(Cidade::setId));
 
 //		modelMapper.createTypeMap(Restaurante.class, RestauranteDTO.class) //classe que queremos transcrever uma para outra
 //		.addMapping(Restaurante::getTaxaFrete, RestauranteDTO::setPrecoFrete); //adicionar um mapeamento
