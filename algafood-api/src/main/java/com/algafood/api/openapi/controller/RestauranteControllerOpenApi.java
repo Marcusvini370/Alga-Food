@@ -3,7 +3,6 @@ package com.algafood.api.openapi.controller;
 import com.algafood.api.dto.RestauranteDTO;
 import com.algafood.api.dto.input.RestauranteInput;
 import com.algafood.api.exceptionhandler.Problem;
-import com.algafood.api.openapi.model.RestauranteBasicModelOpenApi;
 import com.algafood.domain.model.dto.RestauranteBasicoDTO;
 import io.swagger.annotations.*;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,7 +17,7 @@ import java.util.List;
 @Api(tags = "Restaurantes")
 public interface RestauranteControllerOpenApi {
 
-    @ApiOperation(value = "Lista restaurantes", response = RestauranteBasicModelOpenApi.class)
+    @ApiOperation(value = "Lista restaurantes")
     @ApiImplicitParams({
             @ApiImplicitParam(value = "Nome da projeção de pedidos", allowableValues = "apenas-nome", name = "projecao", paramType = "query", type = "string")})
     // @JsonView(RestauranteView.resumo.class)

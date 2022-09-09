@@ -13,13 +13,14 @@ import com.algafood.domain.service.CadastroUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/usuarios")
+@RequestMapping(value = "/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UsuarioController implements UsuarioControllerOpenApi {
 
     @Autowired

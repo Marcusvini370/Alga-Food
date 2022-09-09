@@ -3,6 +3,7 @@ package com.algafood.core.openapi;
 import com.algafood.api.dto.*;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.openapi.model.*;
+import com.algafood.domain.model.dto.RestauranteBasicoDTO;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
@@ -91,6 +92,12 @@ public class SpringFoxConfig {
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(CollectionModel.class, ProdutoDTO.class),
                         ProdutosModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, RestauranteBasicoDTO.class),
+                        RestaurantesBasicoModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, UsuarioDTO.class),
+                        UsuariosModelOpenApi.class))
                 .apiInfo(apiInfo()) //traz as configurações do método para a documentação
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                         new Tag("Grupos", "Gerencia os grupos de usuários"),
