@@ -3,6 +3,8 @@
 
     <include resource="org/springframework/boot/logging/logback/base.xml" />
 
+    <springProfile name="production">
+
     <springProperty name="logglyToken" source="logging.loggly.token" />
 
     <appender name="loggly" class="ch.qos.logback.ext.loggly.LogglyAppender">
@@ -17,5 +19,7 @@
     <root level="info">
         <appender-ref ref="logglyAsync" />
     </root>
+
+    </springProfile>
 
 </configuration>
