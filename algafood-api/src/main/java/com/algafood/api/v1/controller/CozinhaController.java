@@ -46,7 +46,6 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     public PagedModel<CozinhaDTO> listar(@PageableDefault(size = 10) Pageable pageable) {
         log.info("Consultando cozinhas com páginas de {} registros...", pageable.getPageSize());
 
-
         Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 
         PagedModel<CozinhaDTO> cozinhasPagedModel = pagedResourcesAssembler
