@@ -9,6 +9,7 @@ import com.algafood.api.v1.model.input.PedidoInput;
 import com.algafood.api.v1.openapi.controller.PedidoControllerOpenApi;
 import com.algafood.core.data.PageWrapper;
 import com.algafood.core.data.PageableTranslator;
+import com.algafood.core.security.AlgaSecurity;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.filter.PedidoFilter;
@@ -52,6 +53,9 @@ public class PedidoController implements PedidoControllerOpenApi {
     @Autowired
     private PagedResourcesAssembler<Pedido> pagedResourcesAssembler;
 
+    @Autowired
+    private AlgaSecurity algaSecurity;
+
     @GetMapping
     public PagedModel<PedidoResumoDTO> pesquisar(PedidoFilter filtro,
                                                  @PageableDefault(size = 10) Pageable pageable) {
@@ -78,9 +82,8 @@ public class PedidoController implements PedidoControllerOpenApi {
         try {
             Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
 
-            // TODO pegar usuário autenticado
             novoPedido.setCliente(new Usuario());
-            novoPedido.getCliente().setId(1L);
+            novoPedido.getCliente().setId(algaSecurity.getUsuarioId());
 
             novoPedido = emissaoPedido.emitir(novoPedido);
 
