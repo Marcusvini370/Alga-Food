@@ -6,6 +6,7 @@ import com.algafood.api.v1.assembler.ProdutoModelAssembler;
 import com.algafood.api.v1.model.ProdutoDTO;
 import com.algafood.api.v1.model.input.ProdutoInput;
 import com.algafood.api.v1.openapi.controller.RestauranteProdutoControllerOpenApi;
+import com.algafood.core.security.CheckSecurity;
 import com.algafood.domain.model.Produto;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.ProdutoRepository;
@@ -43,6 +44,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
     @Autowired
     private ProdutoInputDisassembler produtoInputDisassembler;
 
+    @CheckSecurity.Restaurantes.PodeConsultar
     @GetMapping
     public CollectionModel<ProdutoDTO> listar(@PathVariable Long restauranteId,
                                               @RequestParam(required = false, defaultValue = "false") boolean incluirInativos) {
@@ -61,6 +63,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
                 .add(algaLinks.linkToProdutos(restauranteId));
     }
 
+    @CheckSecurity.Restaurantes.PodeConsultar
     @GetMapping("/{produtoId}")
     public ProdutoDTO buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
         Produto produto = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
@@ -68,6 +71,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
         return produtoModelAssembler.toModel(produto);
     }
 
+    @CheckSecurity.Restaurantes.PodeEditar
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProdutoDTO adicionar(@PathVariable Long restauranteId,
@@ -82,6 +86,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
         return produtoModelAssembler.toModel(produto);
     }
 
+    @CheckSecurity.Restaurantes.PodeEditar
     @PutMapping("/{produtoId}")
     public ProdutoDTO atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                 @RequestBody @Valid ProdutoInput produtoInput) {
