@@ -166,7 +166,7 @@ values (1, 'João da Silva', 'joao.ger@algafood.com', '$2a$12$pY8XKi.kW8lnpaQtm9
 (6, 'Marcus Vinicius 2', 'marcusvini370+teste@gmail.com', '$2a$12$pY8XKi.kW8lnpaQtm9xA9upitDA0eDl5ON0V7vBWGN4rnWeW3ZomO', utc_timestamp);
 
 insert into usuario_grupo(usuario_id, grupo_id)
-values (1, 1), (1, 2), (2, 2);
+values (1, 1), (2, 2), (3, 3),(4,4), (5,1);
 
 delete from restaurante_usuario_responsavel;
 
