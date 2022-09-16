@@ -71,7 +71,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
         return produtoModelAssembler.toModel(produto);
     }
 
-    @CheckSecurity.Restaurantes.PodeEditar
+    @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProdutoDTO adicionar(@PathVariable Long restauranteId,
@@ -86,7 +86,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
         return produtoModelAssembler.toModel(produto);
     }
 
-    @CheckSecurity.Restaurantes.PodeEditar
+    @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
     @PutMapping("/{produtoId}")
     public ProdutoDTO atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                 @RequestBody @Valid ProdutoInput produtoInput) {

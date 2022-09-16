@@ -38,6 +38,7 @@ public class CidadeController implements CidadeControllerOpenApi {
     @Override
     @GetMapping
     public CollectionModel<CidadeDTO> listar() {
+        //System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
     }
 
