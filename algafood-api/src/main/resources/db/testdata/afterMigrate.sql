@@ -140,8 +140,6 @@ select 1, id from permissao;
 insert into grupo_permissao (grupo_id, permissao_id)
 select 2, id from permissao where nome like 'CONSULTAR_%';
 
-insert into grupo_permissao (grupo_id, permissao_id) values (2, 14);
-
 # Adiciona permissoes no grupo do auxiliar
 insert into grupo_permissao (grupo_id, permissao_id)
 select 3, id from permissao where nome like 'CONSULTAR_%';
