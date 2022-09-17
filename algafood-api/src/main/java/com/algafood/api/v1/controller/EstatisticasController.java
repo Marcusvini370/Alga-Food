@@ -2,6 +2,7 @@ package com.algafood.api.v1.controller;
 
 import com.algafood.api.v1.AlgaLinks;
 import com.algafood.api.v1.openapi.controller.EstatisticasControllerOpenApi;
+import com.algafood.core.security.CheckSecurity;
 import com.algafood.domain.filter.VendaDiariaFilter;
 import com.algafood.domain.model.dto.VendaDiaria;
 import com.algafood.domain.service.VendaQueryService;
@@ -31,12 +32,14 @@ public class EstatisticasController implements EstatisticasControllerOpenApi {
     @Autowired
     private AlgaLinks algaLinks;
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @GetMapping(value = "/vendas-diarias", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro,
                                                     @RequestParam(required = false, defaultValue = "+00:00") String timeOffset) {
         return vendaQueryService.consultarVendasDiarias(filtro, timeOffset);
     }
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public EstatisticasModel estatisticas() {
         var estatisticasModel = new EstatisticasModel();
@@ -46,6 +49,7 @@ public class EstatisticasController implements EstatisticasControllerOpenApi {
         return estatisticasModel;
     }
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @GetMapping(value = "/vendas-diarias/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro,
                                                             @RequestParam(required = false, defaultValue = "+00:00") String timeOfset) {
