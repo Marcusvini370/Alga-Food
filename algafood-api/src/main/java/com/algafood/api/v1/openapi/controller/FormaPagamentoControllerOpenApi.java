@@ -1,8 +1,8 @@
 package com.algafood.api.v1.openapi.controller;
 
+import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.v1.model.FormaPagamentoDTO;
 import com.algafood.api.v1.model.input.FormaPagamentoInput;
-import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.v1.openapi.model.FormasPagamentoModelOpenApi;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,10 +1,10 @@
 package com.algafood.api.v1.openapi.controller;
 
+import com.algafood.api.v1.controller.EstatisticasController.EstatisticasModel;
 import com.algafood.domain.filter.VendaDiariaFilter;
 import com.algafood.domain.model.dto.VendaDiaria;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import com.algafood.api.v1.controller.EstatisticasController.EstatisticasModel;
 
 import java.util.List;
 

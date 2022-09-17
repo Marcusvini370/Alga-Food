@@ -21,6 +21,7 @@
         <squiggly.version>1.3.18</squiggly.version>
         <jasperreports.version>6.18.1</jasperreports.version>
         <springfox.version>3.0.0</springfox.version>
+        <spring-security-oauth2.version>2.3.8.RELEASE</spring-security-oauth2.version>
     </properties>
     <dependencies>
         <dependency>
@@ -164,6 +165,18 @@
             <groupId>com.nimbusds</groupId>
             <artifactId>oauth2-oidc-sdk</artifactId>
             <version>9.43</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+            <version>1.1.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>${spring-security-oauth2.version}</version>
         </dependency>
 
     </dependencies>

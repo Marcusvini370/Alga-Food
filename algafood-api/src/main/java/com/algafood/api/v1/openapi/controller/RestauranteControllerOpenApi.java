@@ -1,9 +1,9 @@
 package com.algafood.api.v1.openapi.controller;
 
-import com.algafood.api.v1.model.RestauranteDTO;
-import com.algafood.api.v1.model.input.RestauranteInput;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.v1.model.RestauranteBasicoDTO;
+import com.algafood.api.v1.model.RestauranteDTO;
+import com.algafood.api.v1.model.input.RestauranteInput;
 import io.swagger.annotations.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

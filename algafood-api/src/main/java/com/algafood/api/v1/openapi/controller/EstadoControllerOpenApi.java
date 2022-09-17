@@ -1,8 +1,8 @@
 package com.algafood.api.v1.openapi.controller;
 
+import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.v1.model.EstadoDTO;
 import com.algafood.api.v1.model.input.EstadoInput;
-import com.algafood.api.exceptionhandler.Problem;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

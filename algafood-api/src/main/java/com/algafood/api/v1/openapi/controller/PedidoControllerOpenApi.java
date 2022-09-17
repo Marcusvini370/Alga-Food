@@ -1,9 +1,9 @@
 package com.algafood.api.v1.openapi.controller;
 
+import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.v1.model.PedidoDTO;
 import com.algafood.api.v1.model.PedidoResumoDTO;
 import com.algafood.api.v1.model.input.PedidoInput;
-import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.domain.filter.PedidoFilter;
 import io.swagger.annotations.*;
 import io.swagger.v3.oas.annotations.media.Content;
