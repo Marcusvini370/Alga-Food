@@ -22,7 +22,7 @@ public class NotificacaoClientePedidoConfirmado {
         // Montagem do email a ser enviado
         var mensagem = Mensagem.builder()
                 .assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
-                .variavel("pedido", pedido).corpo("pedido-confirmado.html")
+                .variavel("pedido", pedido).corpo("emails/pedido-confirmado.html")
                 .destinatario(pedido.getCliente().getEmail())
                 .build();
 
