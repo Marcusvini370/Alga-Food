@@ -2,6 +2,7 @@ package com.algafood.api.v1.assembler;
 
 import com.algafood.api.v1.AlgaLinks;
 import com.algafood.api.v1.model.PermissaoDTO;
+import com.algafood.core.security.AlgaSecurity;
 import com.algafood.domain.model.Permissao;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,22 @@ public class PermissaoModelAssembler implements RepresentationModelAssembler<Per
     @Autowired
     private AlgaLinks algaLinks;
 
+    @Autowired
+    private AlgaSecurity algaSecurity;
+
     public PermissaoDTO toModel(Permissao permissao) {
         PermissaoDTO permissaoModel = modelMapper.map(permissao, PermissaoDTO.class);
         return permissaoModel;
     }
 
     public CollectionModel<PermissaoDTO> toCollectionModel(Iterable<? extends Permissao> entities) {
-        return RepresentationModelAssembler.super.toCollectionModel(entities)
-                .add(algaLinks.linkToPermissoes());
+        CollectionModel<PermissaoDTO> collectionModel
+                = RepresentationModelAssembler.super.toCollectionModel(entities);
+
+        if (algaSecurity.podeConsultarUsuariosGruposPermissoes()) {
+            collectionModel.add(algaLinks.linkToPermissoes());
+        }
+
+        return collectionModel;
     }
 }

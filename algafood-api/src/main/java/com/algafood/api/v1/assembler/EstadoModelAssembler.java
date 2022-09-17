@@ -3,6 +3,7 @@ package com.algafood.api.v1.assembler;
 import com.algafood.api.v1.AlgaLinks;
 import com.algafood.api.v1.controller.EstadoController;
 import com.algafood.api.v1.model.EstadoDTO;
+import com.algafood.core.security.AlgaSecurity;
 import com.algafood.domain.model.Estado;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class EstadoModelAssembler extends RepresentationModelAssemblerSupport<Es
     @Autowired
     private AlgaLinks algaLinks;
 
+    @Autowired
+    private AlgaSecurity algaSecurity;
+
     public EstadoModelAssembler() {
         super(EstadoController.class, EstadoDTO.class);
     }
@@ -28,14 +32,21 @@ public class EstadoModelAssembler extends RepresentationModelAssemblerSupport<Es
         EstadoDTO estadoModel = createModelWithId(estado.getId(), estado);
         modelMapper.map(estado, estadoModel);
 
-        estadoModel.add(algaLinks.linkToEstados("estados"));
+        if (algaSecurity.podeConsultarEstados()) {
+            estadoModel.add(algaLinks.linkToEstados("estados"));
+        }
 
         return estadoModel;
     }
 
     @Override
     public CollectionModel<EstadoDTO> toCollectionModel(Iterable<? extends Estado> entities) {
-        return super.toCollectionModel(entities)
-                .add(algaLinks.linkToEstados());
+        CollectionModel<EstadoDTO> collectionModel = super.toCollectionModel(entities);
+
+        if (algaSecurity.podeConsultarEstados()) {
+            collectionModel.add(algaLinks.linkToEstados());
+        }
+
+        return collectionModel;
     }
 }
