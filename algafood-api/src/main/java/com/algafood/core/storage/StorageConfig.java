@@ -1,9 +1,5 @@
 package com.algafood.core.storage;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.algafood.core.storage.StorageProperties.TipoStorage;
 import com.algafood.domain.service.FotoStorageService;
 import com.algafood.infracstruture.service.storage.LocalFotoStorageService;
@@ -12,6 +8,10 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class StorageConfig {
@@ -20,6 +20,7 @@ public class StorageConfig {
     private StorageProperties storageProperties;
 
     @Bean //método que produz uma instancia de amazonS3, se tornando um bean spring
+    @ConditionalOnProperty(name = "algafood.storage.tipo", havingValue = "s3")
     public AmazonS3 amazonS3() {
         var credentials = new BasicAWSCredentials(
                 storageProperties.getS3().getIdChaveAcesso(),
