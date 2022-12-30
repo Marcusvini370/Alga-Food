@@ -4,44 +4,65 @@ import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.v1.model.PedidoDTO;
 import com.algafood.api.v1.model.PedidoResumoDTO;
 import com.algafood.api.v1.model.input.PedidoInput;
+import com.algafood.core.openapi.PageableParameter;
 import com.algafood.domain.filter.PedidoFilter;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 
-@Api(tags = "Pedidos")
+@Tag(name = "Pedidos")
+@SecurityRequirement(name = "security_auth")
 public interface PedidoControllerOpenApi {
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula",
-                    name = "campos", paramType = "query", type = "string")
+    @Parameters({
+            @Parameter(in = ParameterIn.QUERY, name = "clienteId",
+                    description = "ID do cliente para filtro da pesquisa",
+                    example = "1", schema = @Schema(type = "integer")),
+            @Parameter(in = ParameterIn.QUERY, name = "restauranteId",
+                    description = "ID do restaurante para filtro da pesquisa",
+                    example = "1", schema = @Schema(type = "integer")),
+            @Parameter(in = ParameterIn.QUERY, name = "dataCriacaoInicio",
+                    description = "Data/hora de criação inicial para filtro da pesquisa",
+                    example = "2019-12-01T00:00:00Z", schema = @Schema(type = "string", format = "date-time")),
+            @Parameter(in = ParameterIn.QUERY, name = "dataCriacaoFim",
+                    description = "Data/hora de criação final para filtro da pesquisa",
+                    example = "2019-12-02T23:59:59Z", schema = @Schema(type = "string", format = "date-time"))
     })
-    @ApiOperation("Pesquisa os pedidos")
-    PagedModel<PedidoResumoDTO> pesquisar(PedidoFilter filtro, Pageable pageable);
+    @Operation(summary = "Pesquisa os pedidos")
+    @PageableParameter
+    PagedModel<PedidoResumoDTO> pesquisar(@Parameter(hidden = true) PedidoFilter filtro,
+                                          @Parameter(hidden = true) Pageable pageable);
 
-    @ApiOperation("Registra um pedido")
+    @Operation(summary = "Registra um pedido")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Pedido registrado"),
     })
     PedidoDTO adicionar(
-            @ApiParam(name = "corpo", value = "Representação de um novo pedido")
+            @RequestBody(description = "Representação de um novo pedido", required = true)
             PedidoInput pedidoInput);
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por vírgula",
-                    name = "campos", paramType = "query", type = "string")
+    @Parameters({
+            @Parameter(description = "Nomes das propriedades para filtrar na resposta, separados por vírgula",
+                    name = "campos", in = ParameterIn.QUERY  , schema = @Schema(type = "string"))
     })
-    @ApiOperation("Busca um pedido por código")
+    @Operation(summary = "Busca um pedido por código")
     @ApiResponses({
+            @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado"
                     , content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Problem.class)))
     })
     PedidoDTO buscar(
-            @ApiParam(value = "Código de um pedido", example = "f9981ca4-5a5e-4da3-af04-933861df3e55")
+            @Parameter(description = "Código de um pedido", example = "f9981ca4-5a5e-4da3-af04-933861df3e55")
             String codigoPedido);
 }

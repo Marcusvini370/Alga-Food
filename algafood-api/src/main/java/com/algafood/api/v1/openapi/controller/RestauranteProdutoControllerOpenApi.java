@@ -3,19 +3,22 @@ package com.algafood.api.v1.openapi.controller;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.v1.model.ProdutoDTO;
 import com.algafood.api.v1.model.input.ProdutoInput;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.hateoas.CollectionModel;
 
-@Api(tags = "Produtos")
+@Tag(name = "Produtos")
+@SecurityRequirement(name = "security_auth")
 public interface RestauranteProdutoControllerOpenApi {
 
-    @ApiOperation("Lista os produtos de um restaurante")
+    @Operation(summary = "Lista os produtos de um restaurante")
     @ApiResponses({
             @ApiResponse(responseCode = "400", description = "ID do restaurante inválido",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class))),
@@ -23,54 +26,55 @@ public interface RestauranteProdutoControllerOpenApi {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class)))
     })
     CollectionModel<ProdutoDTO> listar(
-            @ApiParam(value = "ID do restaurante", example = "1", required = true)
+            @Parameter(description = "ID do restaurante", example = "1", required = true)
             Long restauranteId,
 
-            @ApiParam(value = "Indica se deve ou não incluir produtos inativos no resultado da listagem",
-                    example = "false", defaultValue = "false")
+            @Parameter(description = "Indica se deve ou não incluir produtos inativos no resultado da listagem",
+                    example = "false", required = false)
             boolean incluirInativos);
 
-    @ApiOperation("Busca um produto de um restaurante")
+    @Operation(summary = "Busca um produto de um restaurante")
     @ApiResponses({
+            @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", description = "ID do restaurante ou produto inválido",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class))),
             @ApiResponse(responseCode = "404", description = "Produto de restaurante não encontrado",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class)))
     })
     ProdutoDTO buscar(
-            @ApiParam(value = "ID do restaurante", example = "1", required = true)
+            @Parameter(description = "ID do restaurante", example = "1", required = true)
             Long restauranteId,
 
-            @ApiParam(value = "ID do produto", example = "1", required = true)
+            @Parameter(description = "ID do produto", example = "1", required = true)
             Long produtoId);
 
-    @ApiOperation("Cadastra um produto de um restaurante")
+    @Operation(summary = "Cadastra um produto de um restaurante")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Produto cadastrado"),
             @ApiResponse(responseCode = "404", description = "Restaurante não encontrado",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class)))
     })
     ProdutoDTO adicionar(
-            @ApiParam(value = "ID do restaurante", example = "1", required = true)
+            @Parameter(description = "ID do restaurante", example = "1", required = true)
             Long restauranteId,
 
-            @ApiParam(name = "corpo", value = "Representação de um novo produto", required = true)
+            @RequestBody(description = "Representação de um novo produto", required = true)
             ProdutoInput produtoInput);
 
-    @ApiOperation("Atualiza um produto de um restaurante")
+    @Operation(summary = "Atualiza um produto de um restaurante")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Produto atualizado"),
             @ApiResponse(responseCode = "404", description = "Produto de restaurante não encontrado",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Problem.class)))
     })
     ProdutoDTO atualizar(
-            @ApiParam(value = "ID do restaurante", example = "1", required = true)
+            @Parameter(description = "ID do restaurante", example = "1", required = true)
             Long restauranteId,
 
-            @ApiParam(value = "ID do produto", example = "1", required = true)
+            @Parameter(description = "ID do produto", example = "1", required = true)
             Long produtoId,
 
-            @ApiParam(name = "corpo", value = "Representação de um produto com os novos dados",
+            @RequestBody(description = "Representação de um produto com os novos dados",
                     required = true)
             ProdutoInput produtoInput);
 }

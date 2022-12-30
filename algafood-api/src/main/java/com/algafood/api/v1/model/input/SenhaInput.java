@@ -1,7 +1,7 @@
 package com.algafood.api.v1.model.input;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,11 +12,11 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class SenhaInput extends UsuarioInput {
 
-    @ApiModelProperty(example = "123", required = true)
+    @Schema(example = "123", required = true)
     @NotBlank
     private String senhaAtual;
 
-    @ApiModelProperty(example = "123", required = true)
+    @Schema(example = "123", required = true)
     @NotBlank
     private String novaSenha;
 }

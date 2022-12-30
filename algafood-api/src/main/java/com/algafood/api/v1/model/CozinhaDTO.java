@@ -1,6 +1,6 @@
 package com.algafood.api.v1.model;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
@@ -11,11 +11,11 @@ import org.springframework.hateoas.server.core.Relation;
 @Setter
 public class CozinhaDTO extends RepresentationModel<CozinhaDTO> {
 
-    @ApiModelProperty(example = "1")
+    @Schema(example = "1")
     //@JsonView(RestauranteView.resumo.class)
     private Long id;
 
-    @ApiModelProperty(example = "Brasileira")
+    @Schema(example = "Brasileira")
     //@JsonView(RestauranteView.resumo.class)
     private String nome;
 

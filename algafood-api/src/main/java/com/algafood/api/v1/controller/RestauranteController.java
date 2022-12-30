@@ -16,7 +16,7 @@ import com.algafood.domain.exception.RestauranteNaoEncontradoExcpetion;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
@@ -60,7 +60,6 @@ public class RestauranteController implements RestauranteControllerOpenApi {
     }
 
     @CheckSecurity.Restaurantes.PodeGerenciarCadastro
-    @ApiOperation(value = "Lista restaurantes", hidden = true)
     // @JsonView(RestauranteView.apenasNome.class)
     @GetMapping(params = "projecao=apenas-nome")
     public CollectionModel<RestauranteBasicoDTO> listarApenasNomes() {

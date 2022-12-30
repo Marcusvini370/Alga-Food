@@ -3,60 +3,64 @@ package com.algafood.api.v1.openapi.controller;
 import com.algafood.api.exceptionhandler.Problem;
 import com.algafood.api.v1.model.GrupoDTO;
 import com.algafood.api.v1.model.input.GrupoInput;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.hateoas.CollectionModel;
 
-@Api(tags = "Grupos")
+@Tag(name = "Grupos")
+@SecurityRequirement(name = "security_auth")
 public interface GrupoControllerOpenApi {
 
-    @ApiOperation("Lista os grupos")
+    @Operation(summary = "Lista os grupos")
     CollectionModel<GrupoDTO> listar();
 
-    @ApiOperation("Busca um grupo por ID")
+    @Operation(summary = "Busca um grupo por ID")
     @ApiResponses({
+            @ApiResponse(responseCode = "200"),
             @ApiResponse(responseCode = "400", description = "ID da grupo inválido", content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Problem.class))),
             @ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Problem.class)))
     })
     GrupoDTO buscar(
-            @ApiParam(value = "ID de um grupo", example = "1", required = true)
+            @Parameter(description = "ID de um grupo", example = "1", required = true)
             Long grupoId);
 
-    @ApiOperation("Cadastra um grupo")
+    @Operation(summary = "Cadastra um grupo")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Grupo cadastrado"),
     })
     GrupoDTO adicionar(
-            @ApiParam(name = "corpo", value = "Representação de um novo grupo", required = true)
+            @RequestBody( description = "Representação de um novo grupo", required = true)
             GrupoInput grupoInput);
 
-    @ApiOperation("Atualiza um grupo por ID")
+    @Operation(summary = "Atualiza um grupo por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Grupo atualizado"),
             @ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Problem.class)))
     })
     GrupoDTO atualizar(
-            @ApiParam(value = "ID de um grupo", example = "1", required = true)
+            @Parameter(description = "ID de um grupo", example = "1", required = true)
             Long grupoId,
 
-            @ApiParam(name = "corpo", value = "Representação de um grupo com os novos dados", required = true)
+            @RequestBody(description = "Representação de um grupo com os novos dados", required = true)
             GrupoInput grupoInput);
 
-    @ApiOperation("Exclui um grupo por ID")
+    @Operation(summary = "Exclui um grupo por ID")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Grupo excluído"),
             @ApiResponse(responseCode = "404", description = "Grupo não encontrado", content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Problem.class)))
     })
     void remover(
-            @ApiParam(value = "ID de um grupo", example = "1", required = true)
+            @Parameter(description = "ID de um grupo", example = "1", required = true)
             Long grupoId);
 }

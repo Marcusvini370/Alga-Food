@@ -1,25 +1,23 @@
 package com.algafood.api.v1.openapi.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@ApiModel("PageModel")
 @Getter
 @Setter
 public class PageModelOpenApi {
 
-	@ApiModelProperty(example = "10", value = "Quantidade de registros por página")
+	@Schema(example = "10", description = "Quantidade de registros por página")
 	private Long size;
 
-	@ApiModelProperty(example = "50", value = "Total de registros")
+	@Schema(example = "50", description = "Total de registros")
 	private Long totalElements;
 
-	@ApiModelProperty(example = "5", value = "Total de páginas")
+	@Schema(example = "5", description = "Total de páginas")
 	private Long totalPages;
 
-	@ApiModelProperty(example = "0", value = "Número da página (começa em 0)")
+	@Schema(example = "0", description = "Número da página (começa em 0)")
 	private Long number;
 
 }
