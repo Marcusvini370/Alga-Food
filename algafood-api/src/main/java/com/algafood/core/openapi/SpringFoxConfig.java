@@ -1,7 +1,6 @@
 package com.algafood.core.openapi;
 
 import com.algafood.api.exceptionhandler.Problem;
-
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.OAuthFlow;
